@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "ZulaOnUE",
+			"Path": "..\\Source\\ZulaOnUE.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "ZulaOnUEEditor",
+			"Path": "..\\Source\\ZulaOnUEEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

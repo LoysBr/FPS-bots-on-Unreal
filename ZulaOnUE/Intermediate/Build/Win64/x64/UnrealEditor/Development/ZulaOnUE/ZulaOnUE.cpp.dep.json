@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\unreal engine projects\\zulaonue\\source\\zulaonue\\zulaonue.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\unreal engine projects\\zulaonue\\intermediate\\build\\win64\\x64\\zulaonueeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "e:\\unreal engine projects\\zulaonue\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\zulaonue\\definitions.zulaonue.h",
+            "e:\\unreal engine projects\\zulaonue\\source\\zulaonue\\zulaonue.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

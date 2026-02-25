@@ -1,0 +1,36 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\unreal engine projects\\zulaonue\\source\\zulaonue\\variant_shooter\\ai\\shooternpcspawner.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\unreal engine projects\\zulaonue\\intermediate\\build\\win64\\x64\\zulaonueeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "e:\\unreal engine projects\\zulaonue\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\zulaonue\\definitions.zulaonue.h",
+            "e:\\unreal engine projects\\zulaonue\\source\\zulaonue\\variant_shooter\\ai\\shooternpcspawner.h",
+            "e:\\unreal engine projects\\zulaonue\\intermediate\\build\\win64\\unrealeditor\\inc\\zulaonue\\uht\\shooternpcspawner.generated.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\engine\\classes\\components\\capsulecomponent.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\engine\\classes\\components\\shapecomponent.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\shapecomponent.generated.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\capsulecomponent.generated.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\engine\\classes\\components\\arrowcomponent.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\arrowcomponent.generated.h",
+            "e:\\unreal engine projects\\zulaonue\\source\\zulaonue\\variant_shooter\\ai\\shooternpc.h",
+            "e:\\unreal engine projects\\zulaonue\\source\\zulaonue\\zulaonuecharacter.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\engine\\classes\\gameframework\\character.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\engine\\classes\\gameframework\\charactermovementreplication.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\net\\core\\public\\net\\core\\nettoken\\nettokenexportcontext.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\net\\iris\\public\\iris\\serialization\\irisobjectreferencepackagemap.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\iriscore\\uht\\irisobjectreferencepackagemap.generated.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\charactermovementreplication.generated.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\engine\\classes\\gameframework\\rootmotionsource.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\rootmotionsource.generated.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\character.generated.h",
+            "e:\\unreal engine projects\\zulaonue\\intermediate\\build\\win64\\unrealeditor\\inc\\zulaonue\\uht\\zulaonuecharacter.generated.h",
+            "e:\\unreal engine projects\\zulaonue\\source\\zulaonue\\variant_shooter\\weapons\\shooterweaponholder.h",
+            "e:\\unreal engine projects\\zulaonue\\intermediate\\build\\win64\\unrealeditor\\inc\\zulaonue\\uht\\shooterweaponholder.generated.h",
+            "e:\\unreal engine projects\\zulaonue\\intermediate\\build\\win64\\unrealeditor\\inc\\zulaonue\\uht\\shooternpc.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

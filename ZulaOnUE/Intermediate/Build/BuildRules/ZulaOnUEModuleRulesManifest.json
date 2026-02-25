@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"E:\\Unreal Engine Projects\\ZulaOnUE\\Source\\ZulaOnUE\\ZulaOnUE.Build.cs",
+		"E:\\Unreal Engine Projects\\ZulaOnUE\\Source\\ZulaOnUE.Target.cs",
+		"E:\\Unreal Engine Projects\\ZulaOnUE\\Source\\ZulaOnUEEditor.Target.cs"
+	],
+	"EngineVersion": "5.7.3"
+}

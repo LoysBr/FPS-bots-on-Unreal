@@ -1,0 +1,9 @@
+[28704:21616:0225/171951.419:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
+[28704:25444:0225/171951.452:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
+[28704:21616:0225/171951.470:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
+[28704:21616:0225/171953.200:WARNING:external_registry_loader_win.cc(232)] Error observing HKLM: 5
+[29776:27328:0225/171954.179:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-9712AD4F2AA734D7EED7FF7C2C1AE90C will be ignored
+[28704:21616:0225/172750.041:ERROR:usb_descriptors.cc(166)] Device descriptor parsing error.
+[28704:21616:0225/172750.043:ERROR:device_event_log_impl.cc(196)] [17:27:50.043] USB: usb_device_win.cc:95 Failed to read descriptors from \\?\usb#vid_17cc&pid_0839#sn-v537q70n_____#{a5dcbf10-6530-11d2-901f-00c04fb951ed}.
+[28704:21616:0225/172751.708:ERROR:device_event_log_impl.cc(196)] [17:27:51.614] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: Element not found. (0x490)
+[28704:21616:0225/174633.597:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.

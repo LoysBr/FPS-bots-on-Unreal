@@ -1,0 +1,35 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-ZulaOnUE.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/ZulaOnUEEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/Module.ZulaOnUE.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ZulaOnUE.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ZulaOnUECameraManager.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ZulaOnUECharacter.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ZulaOnUEGameMode.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ZulaOnUEPlayerController.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/HorrorCharacter.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/HorrorGameMode.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/HorrorPlayerController.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/HorrorUI.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterCharacter.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterGameMode.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterPlayerController.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/EnvQueryContext_Target.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterAIController.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterNPC.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterNPCSpawner.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterStateTreeUtility.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterBulletCounterUI.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterUI.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterPickup.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterProjectile.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterWeapon.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/ShooterWeaponHolder.cpp.obj"
+"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/Default.rc2.res"
+/OUT:"E:/Unreal Engine Projects/ZulaOnUE/Intermediate/Build/Win64/x64/UnrealEditor/Development/ZulaOnUE/UnrealEditor-ZulaOnUE.lib"

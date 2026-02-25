@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\unreal engine projects\\zulaonue\\source\\zulaonue\\variant_shooter\\weapons\\shooterweaponholder.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\unreal engine projects\\zulaonue\\intermediate\\build\\win64\\x64\\zulaonueeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "e:\\unreal engine projects\\zulaonue\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\zulaonue\\definitions.zulaonue.h",
+            "e:\\unreal engine projects\\zulaonue\\source\\zulaonue\\variant_shooter\\weapons\\shooterweaponholder.h",
+            "e:\\unreal engine projects\\zulaonue\\intermediate\\build\\win64\\unrealeditor\\inc\\zulaonue\\uht\\shooterweaponholder.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

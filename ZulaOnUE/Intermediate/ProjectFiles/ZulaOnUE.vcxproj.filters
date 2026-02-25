@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\ZulaOnUE.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\ZulaOnUEEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Source\ZulaOnUE">
+      <UniqueIdentifier>{695BE25F-7319-37D5-AC6D-340D8243FEE4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ZulaOnUE\Variant_Horror">
+      <UniqueIdentifier>{A692F9B9-3B18-3A42-8C59-CD54DC01E7FD}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Horror\HorrorCharacter.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Horror</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Horror\HorrorCharacter.h">
+      <Filter>Source\ZulaOnUE\Variant_Horror</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Horror\HorrorGameMode.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Horror</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Horror\HorrorGameMode.h">
+      <Filter>Source\ZulaOnUE\Variant_Horror</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Horror\HorrorPlayerController.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Horror</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Horror\HorrorPlayerController.h">
+      <Filter>Source\ZulaOnUE\Variant_Horror</Filter>
+    </ClInclude>
+    <Filter Include="Source\ZulaOnUE\Variant_Horror\UI">
+      <UniqueIdentifier>{AC20C755-6642-3C59-9395-164DC93621C3}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Horror\UI\HorrorUI.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Horror\UI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Horror\UI\HorrorUI.h">
+      <Filter>Source\ZulaOnUE\Variant_Horror\UI</Filter>
+    </ClInclude>
+    <Filter Include="Source\ZulaOnUE\Variant_Shooter">
+      <UniqueIdentifier>{426CBEBD-EDB0-3ED0-99D7-CDAC010D0308}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ZulaOnUE\Variant_Shooter\AI">
+      <UniqueIdentifier>{B7A74309-7763-39B5-A5E2-C016C8444C92}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\AI\EnvQueryContext_Target.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\AI\EnvQueryContext_Target.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\AI</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\AI\ShooterAIController.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\AI\ShooterAIController.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\AI</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\AI\ShooterNPC.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\AI\ShooterNPC.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\AI</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\AI\ShooterNPCSpawner.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\AI\ShooterNPCSpawner.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\AI</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\AI\ShooterStateTreeUtility.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\AI\ShooterStateTreeUtility.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\AI</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\ShooterCharacter.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\ShooterCharacter.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\ShooterGameMode.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\ShooterGameMode.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\ShooterPlayerController.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\ShooterPlayerController.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter</Filter>
+    </ClInclude>
+    <Filter Include="Source\ZulaOnUE\Variant_Shooter\UI">
+      <UniqueIdentifier>{DF407505-5642-37FD-8466-2FF1F6C893BA}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\UI\ShooterBulletCounterUI.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\UI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\UI\ShooterBulletCounterUI.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\UI</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\UI\ShooterUI.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\UI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\UI\ShooterUI.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\UI</Filter>
+    </ClInclude>
+    <Filter Include="Source\ZulaOnUE\Variant_Shooter\Weapons">
+      <UniqueIdentifier>{6979FFE5-AF0B-3B03-9AB2-239C03466D9F}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\Weapons\ShooterPickup.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\Weapons</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\Weapons\ShooterPickup.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\Weapons</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\Weapons\ShooterProjectile.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\Weapons</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\Weapons\ShooterProjectile.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\Weapons</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\Weapons\ShooterWeapon.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\Weapons</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\Weapons\ShooterWeapon.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\Weapons</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\Variant_Shooter\Weapons\ShooterWeaponHolder.cpp">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\Weapons</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\Variant_Shooter\Weapons\ShooterWeaponHolder.h">
+      <Filter>Source\ZulaOnUE\Variant_Shooter\Weapons</Filter>
+    </ClInclude>
+    <None Include="..\..\Source\ZulaOnUE\ZulaOnUE.Build.cs">
+      <Filter>Source\ZulaOnUE</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\ZulaOnUE\ZulaOnUE.cpp">
+      <Filter>Source\ZulaOnUE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\ZulaOnUE.h">
+      <Filter>Source\ZulaOnUE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\ZulaOnUECameraManager.cpp">
+      <Filter>Source\ZulaOnUE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\ZulaOnUECameraManager.h">
+      <Filter>Source\ZulaOnUE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\ZulaOnUECharacter.cpp">
+      <Filter>Source\ZulaOnUE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\ZulaOnUECharacter.h">
+      <Filter>Source\ZulaOnUE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\ZulaOnUEGameMode.cpp">
+      <Filter>Source\ZulaOnUE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\ZulaOnUEGameMode.h">
+      <Filter>Source\ZulaOnUE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ZulaOnUE\ZulaOnUEPlayerController.cpp">
+      <Filter>Source\ZulaOnUE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ZulaOnUE\ZulaOnUEPlayerController.h">
+      <Filter>Source\ZulaOnUE</Filter>
+    </ClInclude>
+    <None Include="..\..\ZulaOnUE.uproject" />
+  </ItemGroup>
+</Project>
