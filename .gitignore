@@ -48,8 +48,8 @@ ZulaOnUE/SourceArt/**/*.png
 ZulaOnUE/SourceArt/**/*.tga
 
 # Binary Files
+ZulaOnUE/Binaries
 ZulaOnUE/Binaries/*
-ZulaOnUE/Binaries/**
 ZulaOnUE/Plugins/**/Binaries/*
 
 # Builds
@@ -75,3 +75,4 @@ ZulaOnUE/Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 ZulaOnUE/DerivedDataCache/*
+
