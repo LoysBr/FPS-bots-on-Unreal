@@ -8,6 +8,8 @@
 #include "EnhancedInputComponent.h"
 #include "InputActionValue.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "ShooterWeapon.h"
+#include "ShooterGameMode.h"
 #include "ZulaOnUE.h"
 
 AZulaOnUECharacter::AZulaOnUECharacter()
@@ -117,4 +119,250 @@ void AZulaOnUECharacter::DoJumpEnd()
 {
 	// pass StopJumping to the character
 	StopJumping();
+}
+
+//float AZulaOnUECharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+//{
+//	// ignore if already dead
+//	if (CurrentHP <= 0.0f)
+//	{
+//		return 0.0f;
+//	}
+//
+//	// Reduce HP
+//	CurrentHP -= Damage;
+//
+//	// Have we depleted HP?
+//	if (CurrentHP <= 0.0f)
+//	{
+//		Die();
+//	}
+//
+//	// update the HUD
+//	OnDamaged.Broadcast(FMath::Max(0.0f, CurrentHP / MaxHP));
+//
+//	return Damage;
+//}
+
+void AZulaOnUECharacter::DoStartFiring()
+{
+	// fire the current weapon
+	if (CurrentWeapon && !IsDead())
+	{
+		CurrentWeapon->StartFiring();
+	}
+}
+
+void AZulaOnUECharacter::DoStopFiring()
+{
+	// stop firing the current weapon
+	if (CurrentWeapon && !IsDead())
+	{
+		CurrentWeapon->StopFiring();
+	}
+}
+
+void AZulaOnUECharacter::DoSwitchWeapon()
+{
+	// ensure we have at least two weapons two switch between
+	if (OwnedWeapons.Num() > 1 && !IsDead())
+	{
+		// deactivate the old weapon
+		CurrentWeapon->DeactivateWeapon();
+
+		// find the index of the current weapon in the owned list
+		int32 WeaponIndex = OwnedWeapons.Find(CurrentWeapon);
+
+		// is this the last weapon?
+		if (WeaponIndex == OwnedWeapons.Num() - 1)
+		{
+			// loop back to the beginning of the array
+			WeaponIndex = 0;
+		}
+		else {
+			// select the next weapon index
+			++WeaponIndex;
+		}
+
+		// set the new weapon as current
+		CurrentWeapon = OwnedWeapons[WeaponIndex];
+
+		// activate the new weapon
+		CurrentWeapon->ActivateWeapon();
+	}
+}
+
+//void AZulaOnUECharacter::AttachWeaponMeshes(AShooterWeapon* Weapon)
+//{
+//	const FAttachmentTransformRules AttachmentRule(EAttachmentRule::SnapToTarget, false);
+//
+//	// attach the weapon actor
+//	Weapon->AttachToActor(this, AttachmentRule);
+//
+//	// attach the weapon meshes
+//	Weapon->GetFirstPersonMesh()->AttachToComponent(GetFirstPersonMesh(), AttachmentRule, FirstPersonWeaponSocket);
+//	Weapon->GetThirdPersonMesh()->AttachToComponent(GetMesh(), AttachmentRule, FirstPersonWeaponSocket);
+//
+//}
+//
+//void AZulaOnUECharacter::PlayFiringMontage(UAnimMontage* Montage)
+//{
+//	// stub
+//}
+//
+//void AZulaOnUECharacter::AddWeaponRecoil(float Recoil)
+//{
+//	// apply the recoil as pitch input
+//	AddControllerPitchInput(Recoil);
+//}
+//
+//void AZulaOnUECharacter::UpdateWeaponHUD(int32 CurrentAmmo, int32 MagazineSize)
+//{
+//	OnBulletCountUpdated.Broadcast(MagazineSize, CurrentAmmo);
+//}
+//
+////ONLY FOR FPS CHARACTER
+//FVector AZulaOnUECharacter::GetWeaponTargetLocation()
+//{
+//	// trace ahead from the camera viewpoint
+//	FHitResult OutHit;
+//
+//	const FVector Start = GetFirstPersonCameraComponent()->GetComponentLocation();
+//	const FVector End = Start + (GetFirstPersonCameraComponent()->GetForwardVector() * MaxAimDistance);
+//
+//	FCollisionQueryParams QueryParams;
+//	QueryParams.AddIgnoredActor(this);
+//
+//	GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, QueryParams);
+//
+//	// return either the impact point or the trace end
+//	return OutHit.bBlockingHit ? OutHit.ImpactPoint : OutHit.TraceEnd;
+//}
+//
+//void AZulaOnUECharacter::AddWeaponClass(const TSubclassOf<AShooterWeapon>& WeaponClass)
+//{
+//	// do we already own this weapon?
+//	AShooterWeapon* OwnedWeapon = FindWeaponOfType(WeaponClass);
+//
+//	if (!OwnedWeapon)
+//	{
+//		// spawn the new weapon
+//		FActorSpawnParameters SpawnParams;
+//		SpawnParams.Owner = this;
+//		SpawnParams.Instigator = this;
+//		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+//		SpawnParams.TransformScaleMethod = ESpawnActorScaleMethod::MultiplyWithRoot;
+//
+//		AShooterWeapon* AddedWeapon = GetWorld()->SpawnActor<AShooterWeapon>(WeaponClass, GetActorTransform(), SpawnParams);
+//
+//		if (AddedWeapon)
+//		{
+//			// add the weapon to the owned list
+//			OwnedWeapons.Add(AddedWeapon);
+//
+//			// if we have an existing weapon, deactivate it
+//			if (CurrentWeapon)
+//			{
+//				CurrentWeapon->DeactivateWeapon();
+//			}
+//
+//			// switch to the new weapon
+//			CurrentWeapon = AddedWeapon;
+//			CurrentWeapon->ActivateWeapon();
+//		}
+//	}
+//}
+//
+//void AZulaOnUECharacter::OnWeaponActivated(AShooterWeapon* Weapon)
+//{
+//	// update the bullet counter
+//	OnBulletCountUpdated.Broadcast(Weapon->GetMagazineSize(), Weapon->GetBulletCount());
+//
+//	// set the character mesh AnimInstances
+//	GetFirstPersonMesh()->SetAnimInstanceClass(Weapon->GetFirstPersonAnimInstanceClass());
+//	GetMesh()->SetAnimInstanceClass(Weapon->GetThirdPersonAnimInstanceClass());
+//}
+//
+//void AZulaOnUECharacter::OnWeaponDeactivated(AShooterWeapon* Weapon)
+//{
+//	// unused
+//}
+//
+//void AZulaOnUECharacter::OnSemiWeaponRefire()
+//{
+//	// unused
+//}
+
+AShooterWeapon* AZulaOnUECharacter::FindWeaponOfType(TSubclassOf<AShooterWeapon> WeaponClass) const
+{
+	// check each owned weapon
+	for (AShooterWeapon* Weapon : OwnedWeapons)
+	{
+		if (Weapon->IsA(WeaponClass))
+		{
+			return Weapon;
+		}
+	}
+
+	// weapon not found
+	return nullptr;
+
+}
+
+void AZulaOnUECharacter::Die()
+{
+	// deactivate the weapon
+	if (IsValid(CurrentWeapon))
+	{
+		CurrentWeapon->DeactivateWeapon();
+	}
+
+	// increment the team score
+	if (AShooterGameMode* GM = Cast<AShooterGameMode>(GetWorld()->GetAuthGameMode()))
+	{
+		GM->IncrementTeamScore(TeamByte);
+	}
+
+	// grant the death tag to the character
+	Tags.Add(DeathTag);
+
+	// from ShooterNPC.cpp
+	// 
+	// disable capsule collision
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	////
+
+
+	// stop character movement
+	GetCharacterMovement()->StopMovementImmediately();
+
+	// from ShooterNPC.cpp
+	// 
+	// disable capsule collision
+	GetCharacterMovement()->StopActiveMovement();
+	////
+
+	// disable controls
+	DisableInput(nullptr);
+
+	// reset the bullet counter UI
+	OnBulletCountUpdated.Broadcast(0, 0);
+
+	// call the BP handler
+	BP_OnDeath();
+
+	// schedule character respawn
+	GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &AZulaOnUECharacter::OnRespawn, RespawnTime, false);
+}
+
+void AZulaOnUECharacter::OnRespawn()
+{
+	// destroy the character to force the PC to respawn
+	Destroy();
+}
+
+bool AZulaOnUECharacter::IsDead() const
+{
+	// the character is dead if their current HP drops to zero
+	return CurrentHP <= 0.0f;
 }
