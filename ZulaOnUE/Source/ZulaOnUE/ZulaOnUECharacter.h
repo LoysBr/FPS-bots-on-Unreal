@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "ShooterWeaponHolder.h"
 #include "ZulaOnUECharacter.generated.h"
 
 class UInputComponent;
@@ -22,13 +23,39 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDamagedDelegate, float, LifePercent
 
 
 UCLASS(abstract)
-class AZulaOnUECharacter : public ACharacter
+class AZulaOnUECharacter : public ACharacter, public IShooterWeaponHolder
 {
 	GENERATED_BODY()
 
 	///////////////
 	/// MEMBERS ///
 	///////////////
+public:
+	/** Jump Input Action */
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* JumpAction;
+
+	/** Move Input Action */
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* MoveAction;
+
+	/** Look Input Action */
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction* LookAction;
+
+	/** Mouse Look Input Action */
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction* MouseLookAction;
+
+	/** Fire weapon input action */
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* FireAction;
+
+	/** Switch weapon input action */
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* SwitchWeaponAction;
+
+
 private:
 	/** AI Noise emitter component */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
@@ -43,30 +70,7 @@ private:
 	UCameraComponent* FirstPersonCameraComponent;
 
 protected:
-	/** Jump Input Action */
-	UPROPERTY(EditAnywhere, Category ="Input")
-	UInputAction* JumpAction;
-
-	/** Move Input Action */
-	UPROPERTY(EditAnywhere, Category ="Input")
-	UInputAction* MoveAction;
-
-	/** Look Input Action */
-	UPROPERTY(EditAnywhere, Category ="Input")
-	class UInputAction* LookAction;
-
-	/** Mouse Look Input Action */
-	UPROPERTY(EditAnywhere, Category ="Input")
-	class UInputAction* MouseLookAction;
 	
-	/** Fire weapon input action */
-	UPROPERTY(EditAnywhere, Category = "Input")
-	UInputAction * FireAction;
-
-	/** Switch weapon input action */
-	UPROPERTY(EditAnywhere, Category = "Input")
-	UInputAction* SwitchWeaponAction;
-
 	/** Name of the first person mesh weapon socket */
 	UPROPERTY(EditAnywhere, Category = "Weapons")
 	FName FirstPersonWeaponSocket = FName("HandGrip_R");
@@ -123,16 +127,39 @@ public:
 	/** Returns first person camera component **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
-	/** Handles stop firing input */
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	void DoStopFiring();
-
-	/** Handles switch weapon input */
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	void DoSwitchWeapon();
-
 	/** Returns true if the character is dead */
 	bool IsDead() const;
+
+	//~Begin IShooterWeaponHolder interface
+
+	/** Attaches a weapon's meshes to the owner */
+	virtual void AttachWeaponMeshes(AShooterWeapon* Weapon) override;
+
+	/** Plays the firing montage for the weapon */
+	virtual void PlayFiringMontage(UAnimMontage* Montage) override;
+
+	/** Applies weapon recoil to the owner */
+	virtual void AddWeaponRecoil(float Recoil) override;
+
+	/** Updates the weapon's HUD with the current ammo count */
+	virtual void UpdateWeaponHUD(int32 CurrentAmmo, int32 MagazineSize) override;
+
+	/** Calculates and returns the aim location for the weapon */
+	virtual FVector GetWeaponTargetLocation() override;
+
+	/** Gives a weapon of this class to the owner */
+	virtual void AddWeaponClass(const TSubclassOf<AShooterWeapon>& WeaponClass) override;
+
+	/** Activates the passed weapon */
+	virtual void OnWeaponActivated(AShooterWeapon* Weapon) override;
+
+	/** Deactivates the passed weapon */
+	virtual void OnWeaponDeactivated(AShooterWeapon* Weapon) override;
+
+	/** Notifies the owner that the weapon cooldown has expired and it's ready to shoot again */
+	virtual void OnSemiWeaponRefire() override;
+
+	//~End IShooterWeaponHolder interface
 
 protected:
 
@@ -161,6 +188,14 @@ protected:
 	/** Handles start firing input */
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void DoStartFiring();
+
+	/** Handles stop firing input */
+	UFUNCTION(BlueprintCallable, Category="Input")
+	void DoStopFiring();
+
+	/** Handles switch weapon input */
+	UFUNCTION(BlueprintCallable, Category="Input")
+	void DoSwitchWeapon();
 
 	/** Gameplay initialization */
 	//virtual void BeginPlay() override;

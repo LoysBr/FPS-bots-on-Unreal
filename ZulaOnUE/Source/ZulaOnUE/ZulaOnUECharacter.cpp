@@ -192,106 +192,106 @@ void AZulaOnUECharacter::DoSwitchWeapon()
 	}
 }
 
-//void AZulaOnUECharacter::AttachWeaponMeshes(AShooterWeapon* Weapon)
-//{
-//	const FAttachmentTransformRules AttachmentRule(EAttachmentRule::SnapToTarget, false);
-//
-//	// attach the weapon actor
-//	Weapon->AttachToActor(this, AttachmentRule);
-//
-//	// attach the weapon meshes
-//	Weapon->GetFirstPersonMesh()->AttachToComponent(GetFirstPersonMesh(), AttachmentRule, FirstPersonWeaponSocket);
-//	Weapon->GetThirdPersonMesh()->AttachToComponent(GetMesh(), AttachmentRule, FirstPersonWeaponSocket);
-//
-//}
-//
-//void AZulaOnUECharacter::PlayFiringMontage(UAnimMontage* Montage)
-//{
-//	// stub
-//}
-//
-//void AZulaOnUECharacter::AddWeaponRecoil(float Recoil)
-//{
-//	// apply the recoil as pitch input
-//	AddControllerPitchInput(Recoil);
-//}
-//
-//void AZulaOnUECharacter::UpdateWeaponHUD(int32 CurrentAmmo, int32 MagazineSize)
-//{
-//	OnBulletCountUpdated.Broadcast(MagazineSize, CurrentAmmo);
-//}
-//
-////ONLY FOR FPS CHARACTER
-//FVector AZulaOnUECharacter::GetWeaponTargetLocation()
-//{
-//	// trace ahead from the camera viewpoint
-//	FHitResult OutHit;
-//
-//	const FVector Start = GetFirstPersonCameraComponent()->GetComponentLocation();
-//	const FVector End = Start + (GetFirstPersonCameraComponent()->GetForwardVector() * MaxAimDistance);
-//
-//	FCollisionQueryParams QueryParams;
-//	QueryParams.AddIgnoredActor(this);
-//
-//	GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, QueryParams);
-//
-//	// return either the impact point or the trace end
-//	return OutHit.bBlockingHit ? OutHit.ImpactPoint : OutHit.TraceEnd;
-//}
-//
-//void AZulaOnUECharacter::AddWeaponClass(const TSubclassOf<AShooterWeapon>& WeaponClass)
-//{
-//	// do we already own this weapon?
-//	AShooterWeapon* OwnedWeapon = FindWeaponOfType(WeaponClass);
-//
-//	if (!OwnedWeapon)
-//	{
-//		// spawn the new weapon
-//		FActorSpawnParameters SpawnParams;
-//		SpawnParams.Owner = this;
-//		SpawnParams.Instigator = this;
-//		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-//		SpawnParams.TransformScaleMethod = ESpawnActorScaleMethod::MultiplyWithRoot;
-//
-//		AShooterWeapon* AddedWeapon = GetWorld()->SpawnActor<AShooterWeapon>(WeaponClass, GetActorTransform(), SpawnParams);
-//
-//		if (AddedWeapon)
-//		{
-//			// add the weapon to the owned list
-//			OwnedWeapons.Add(AddedWeapon);
-//
-//			// if we have an existing weapon, deactivate it
-//			if (CurrentWeapon)
-//			{
-//				CurrentWeapon->DeactivateWeapon();
-//			}
-//
-//			// switch to the new weapon
-//			CurrentWeapon = AddedWeapon;
-//			CurrentWeapon->ActivateWeapon();
-//		}
-//	}
-//}
-//
-//void AZulaOnUECharacter::OnWeaponActivated(AShooterWeapon* Weapon)
-//{
-//	// update the bullet counter
-//	OnBulletCountUpdated.Broadcast(Weapon->GetMagazineSize(), Weapon->GetBulletCount());
-//
-//	// set the character mesh AnimInstances
-//	GetFirstPersonMesh()->SetAnimInstanceClass(Weapon->GetFirstPersonAnimInstanceClass());
-//	GetMesh()->SetAnimInstanceClass(Weapon->GetThirdPersonAnimInstanceClass());
-//}
-//
-//void AZulaOnUECharacter::OnWeaponDeactivated(AShooterWeapon* Weapon)
-//{
-//	// unused
-//}
-//
-//void AZulaOnUECharacter::OnSemiWeaponRefire()
-//{
-//	// unused
-//}
+void AZulaOnUECharacter::AttachWeaponMeshes(AShooterWeapon* Weapon)
+{
+	const FAttachmentTransformRules AttachmentRule(EAttachmentRule::SnapToTarget, false);
+
+	// attach the weapon actor
+	Weapon->AttachToActor(this, AttachmentRule);
+
+	// attach the weapon meshes
+	Weapon->GetFirstPersonMesh()->AttachToComponent(GetFirstPersonMesh(), AttachmentRule, FirstPersonWeaponSocket);
+	Weapon->GetThirdPersonMesh()->AttachToComponent(GetMesh(), AttachmentRule, FirstPersonWeaponSocket);
+
+}
+
+void AZulaOnUECharacter::PlayFiringMontage(UAnimMontage* Montage)
+{
+	// stub
+}
+
+void AZulaOnUECharacter::AddWeaponRecoil(float Recoil)
+{
+	// apply the recoil as pitch input
+	AddControllerPitchInput(Recoil);
+}
+
+void AZulaOnUECharacter::UpdateWeaponHUD(int32 CurrentAmmo, int32 MagazineSize)
+{
+	OnBulletCountUpdated.Broadcast(MagazineSize, CurrentAmmo);
+}
+
+//ONLY FOR FPS CHARACTER
+FVector AZulaOnUECharacter::GetWeaponTargetLocation()
+{
+	// trace ahead from the camera viewpoint
+	FHitResult OutHit;
+
+	const FVector Start = GetFirstPersonCameraComponent()->GetComponentLocation();
+	const FVector End = Start + (GetFirstPersonCameraComponent()->GetForwardVector() * MaxAimDistance);
+
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(this);
+
+	GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, QueryParams);
+
+	// return either the impact point or the trace end
+	return OutHit.bBlockingHit ? OutHit.ImpactPoint : OutHit.TraceEnd;
+}
+
+void AZulaOnUECharacter::AddWeaponClass(const TSubclassOf<AShooterWeapon>& WeaponClass)
+{
+	// do we already own this weapon?
+	AShooterWeapon* OwnedWeapon = FindWeaponOfType(WeaponClass);
+
+	if (!OwnedWeapon)
+	{
+		// spawn the new weapon
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.Instigator = this;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		SpawnParams.TransformScaleMethod = ESpawnActorScaleMethod::MultiplyWithRoot;
+
+		AShooterWeapon* AddedWeapon = GetWorld()->SpawnActor<AShooterWeapon>(WeaponClass, GetActorTransform(), SpawnParams);
+
+		if (AddedWeapon)
+		{
+			// add the weapon to the owned list
+			OwnedWeapons.Add(AddedWeapon);
+
+			// if we have an existing weapon, deactivate it
+			if (CurrentWeapon)
+			{
+				CurrentWeapon->DeactivateWeapon();
+			}
+
+			// switch to the new weapon
+			CurrentWeapon = AddedWeapon;
+			CurrentWeapon->ActivateWeapon();
+		}
+	}
+}
+
+void AZulaOnUECharacter::OnWeaponActivated(AShooterWeapon* Weapon)
+{
+	// update the bullet counter
+	OnBulletCountUpdated.Broadcast(Weapon->GetMagazineSize(), Weapon->GetBulletCount());
+
+	// set the character mesh AnimInstances
+	GetFirstPersonMesh()->SetAnimInstanceClass(Weapon->GetFirstPersonAnimInstanceClass());
+	GetMesh()->SetAnimInstanceClass(Weapon->GetThirdPersonAnimInstanceClass());
+}
+
+void AZulaOnUECharacter::OnWeaponDeactivated(AShooterWeapon* Weapon)
+{
+	// unused
+}
+
+void AZulaOnUECharacter::OnSemiWeaponRefire()
+{
+	// unused
+}
 
 AShooterWeapon* AZulaOnUECharacter::FindWeaponOfType(TSubclassOf<AShooterWeapon> WeaponClass) const
 {

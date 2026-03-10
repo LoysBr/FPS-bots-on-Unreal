@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "FpsCharacter.h"
 #include "ShooterPlayerController.generated.h"
 
 class UInputMappingContext;
@@ -44,7 +45,7 @@ protected:
 
 	/** Character class to respawn when the possessed pawn is destroyed */
 	UPROPERTY(EditAnywhere, Category="Shooter|Respawn")
-	TSubclassOf<AShooterCharacter> CharacterClass;
+	TSubclassOf<AFpsCharacter> CharacterClass;
 
 	/** Type of bullet counter UI widget to spawn */
 	UPROPERTY(EditAnywhere, Category="Shooter|UI")

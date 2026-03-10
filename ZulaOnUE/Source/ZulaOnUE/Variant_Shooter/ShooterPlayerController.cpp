@@ -87,17 +87,17 @@ void AShooterPlayerController::OnPossess(APawn* InPawn)
 	InPawn->OnDestroyed.AddDynamic(this, &AShooterPlayerController::OnPawnDestroyed);
 
 	// is this a shooter character?
-	if (AShooterCharacter* ShooterCharacter = Cast<AShooterCharacter>(InPawn))
+	if (AFpsCharacter* FpsCharacter = Cast<AFpsCharacter>(InPawn))
 	{
 		// add the player tag
-		ShooterCharacter->Tags.Add(PlayerPawnTag);
+		FpsCharacter->Tags.Add(PlayerPawnTag);
 
 		// subscribe to the pawn's delegates
-		ShooterCharacter->OnBulletCountUpdated.AddDynamic(this, &AShooterPlayerController::OnBulletCountUpdated);
-		ShooterCharacter->OnDamaged.AddDynamic(this, &AShooterPlayerController::OnPawnDamaged);
+		FpsCharacter->OnBulletCountUpdated.AddDynamic(this, &AShooterPlayerController::OnBulletCountUpdated);
+		FpsCharacter->OnDamaged.AddDynamic(this, &AShooterPlayerController::OnPawnDamaged);
 
 		// force update the life bar
-		ShooterCharacter->OnDamaged.Broadcast(1.0f);
+		FpsCharacter->OnDamaged.Broadcast(1.0f);
 	}
 }
 
@@ -121,7 +121,7 @@ void AShooterPlayerController::OnPawnDestroyed(AActor* DestroyedActor)
 		// spawn a character at the player start
 		const FTransform SpawnTransform = RandomPlayerStart->GetActorTransform();
 
-		if (AShooterCharacter* RespawnedCharacter = GetWorld()->SpawnActor<AShooterCharacter>(CharacterClass, SpawnTransform))
+		if (AFpsCharacter* RespawnedCharacter = GetWorld()->SpawnActor<AFpsCharacter>(CharacterClass, SpawnTransform))
 		{
 			// possess the character
 			Possess(RespawnedCharacter);
