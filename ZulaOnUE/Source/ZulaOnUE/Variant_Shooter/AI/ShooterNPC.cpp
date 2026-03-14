@@ -16,13 +16,13 @@ void AShooterNPC::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// spawn the weapon
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.Owner = this;
-	SpawnParams.Instigator = this;
-	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	//// spawn the weapon
+	//FActorSpawnParameters SpawnParams;
+	//SpawnParams.Owner = this;
+	//SpawnParams.Instigator = this;
+	//SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	CurrentWeapon = GetWorld()->SpawnActor<AShooterWeapon>(WeaponClass, GetActorTransform(), SpawnParams);
+	///*CurrentWeapon = GetWorld()->SpawnActor<AShooterWeapon>(StartWeapon, GetActorTransform(), SpawnParams);*/
 }
 
 void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -171,14 +171,17 @@ void AShooterNPC::DeferredDestruction()
 
 void AShooterNPC::StartShooting(AActor* ActorToShoot)
 {
-	// save the aim target
-	CurrentAimTarget = ActorToShoot;
+	if (CurrentWeapon)
+	{
+		// save the aim target
+		CurrentAimTarget = ActorToShoot;
 
-	// raise the flag
-	bIsShooting = true;
+		// raise the flag
+		bIsShooting = true;
 
-	// signal the weapon
-	CurrentWeapon->StartFiring();
+		// signal the weapon
+		CurrentWeapon->StartFiring();
+	}
 }
 
 void AShooterNPC::StopShooting()

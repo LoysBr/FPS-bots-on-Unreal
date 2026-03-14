@@ -48,10 +48,6 @@ protected:
 	///** Pointer to the equipped weapon */
 	//TObjectPtr<AShooterWeapon> Weapon;
 
-	/** Type of weapon to spawn for this character */
-	UPROPERTY(EditAnywhere, Category="Weapon")
-	TSubclassOf<AShooterWeapon> WeaponClass;
-
 	///** Name of the first person mesh weapon socket */
 	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category ="Weapons")
 	//FName FirstPersonWeaponSocket = FName("HandGrip_R");

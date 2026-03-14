@@ -75,6 +75,10 @@ private:
 	UCameraComponent* FirstPersonCameraComponent;
 
 protected:
+
+	/** Type of weapon to spawn for this character */
+	UPROPERTY(EditAnywhere, Category = "Weapon")
+	TSubclassOf<AShooterWeapon> StartWeapon;
 	
 	/** Name of the first person mesh weapon socket */
 	UPROPERTY(EditAnywhere, Category = "Weapons")

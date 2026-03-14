@@ -58,6 +58,14 @@ void AZulaOnUECharacter::BeginPlay()
 
 	Super::BeginPlay();
 	
+	// spawn the weapon
+	/*FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = this;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	CurrentWeapon = GetWorld()->SpawnActor<AShooterWeapon>(StartWeapon, GetActorTransform(), SpawnParams);*/
+	AddWeaponClass(StartWeapon);
+
 	// reset HP to max
 	CurrentHP = MaxHP;
 
