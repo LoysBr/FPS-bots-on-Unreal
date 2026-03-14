@@ -22,7 +22,7 @@ void AShooterNPC::BeginPlay()
 	SpawnParams.Instigator = this;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	//CurrentWeapon = GetWorld()->SpawnActor<AShooterWeapon>(WeaponClass, GetActorTransform(), SpawnParams);
+	CurrentWeapon = GetWorld()->SpawnActor<AShooterWeapon>(WeaponClass, GetActorTransform(), SpawnParams);
 }
 
 void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -148,21 +148,21 @@ void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
 //	}
 //}
 //
-//void AShooterNPC::Die()
-//{
-////	Super::Die();
-//
-//	// call the delegate
-//	OnPawnDeath.Broadcast();
-//
-//	// enable ragdoll physics on the third person mesh
-//	GetMesh()->SetCollisionProfileName(RagdollCollisionProfile);
-//	GetMesh()->SetSimulatePhysics(true);
-//	GetMesh()->SetPhysicsBlendWeight(1.0f);
-//
-//	// schedule actor destruction
-//	GetWorld()->GetTimerManager().SetTimer(DeathTimer, this, &AShooterNPC::DeferredDestruction, DeferredDestructionTime, false);
-//}
+void AShooterNPC::Die()
+{
+	Super::Die();
+
+	// call the delegate
+	OnPawnDeath.Broadcast();
+
+	// enable ragdoll physics on the third person mesh
+	GetMesh()->SetCollisionProfileName(RagdollCollisionProfile);
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetPhysicsBlendWeight(1.0f);
+
+	// schedule actor destruction
+	GetWorld()->GetTimerManager().SetTimer(DeathTimer, this, &AShooterNPC::DeferredDestruction, DeferredDestructionTime, false);
+}
 
 void AShooterNPC::DeferredDestruction()
 {
@@ -178,7 +178,7 @@ void AShooterNPC::StartShooting(AActor* ActorToShoot)
 	bIsShooting = true;
 
 	// signal the weapon
-	//CurrentWeapon->StartFiring();
+	CurrentWeapon->StartFiring();
 }
 
 void AShooterNPC::StopShooting()
@@ -187,5 +187,5 @@ void AShooterNPC::StopShooting()
 	bIsShooting = false;
 
 	// signal the weapon
-	//CurrentWeapon->StopFiring();
+	CurrentWeapon->StopFiring();
 }

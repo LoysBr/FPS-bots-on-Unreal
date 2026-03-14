@@ -11,11 +11,15 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "ShooterWeapon.h"
 #include "ShooterGameMode.h"
-#include "Print"
 #include "ZulaOnUE.h"
 
 AZulaOnUECharacter::AZulaOnUECharacter()
 {
+	// reset HP to max	
+	//*GetNameSafe(this)
+	UE_LOG(LogTemp, Display, TEXT("%s Constructor CurrentHP = %f"), *(this->GetName()), MaxHP);
+	CurrentHP = MaxHP;
+
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
 	
@@ -59,6 +63,7 @@ void AZulaOnUECharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	// reset HP to max
+	UE_LOG(LogTemp, Display, TEXT("AZulaOnUECharacter BeginPlay CurrentHP = %f"), MaxHP);
 	CurrentHP = MaxHP;
 
 	// update the HUD

@@ -88,6 +88,7 @@ protected:
 	float MaxHP = 500.0f;
 
 	/** Current HP remaining to this character */
+	UPROPERTY(BlueprintReadOnly, Category="Damage")
 	float CurrentHP = 0.0f;
 
 	/** Team ID for this character*/
