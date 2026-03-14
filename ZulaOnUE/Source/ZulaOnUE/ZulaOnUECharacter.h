@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "ShooterWeaponHolder.h"
+#include <EngineGlobals.h>
+#include <Runtime/Engine/Classes/Engine/Engine.h>
 #include "ZulaOnUECharacter.generated.h"
 
 class UInputComponent;
@@ -21,6 +23,9 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FBulletCountUpdatedDelegate, int32, MagazineSize, int32, Bullets);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDamagedDelegate, float, LifePercent);
 
+
+#define printScreen(text) if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 999, FColor::Black, text); \
+UE_LOG(LogTemp, Display, TEXT(text))
 
 UCLASS(abstract)
 class AZulaOnUECharacter : public ACharacter, public IShooterWeaponHolder

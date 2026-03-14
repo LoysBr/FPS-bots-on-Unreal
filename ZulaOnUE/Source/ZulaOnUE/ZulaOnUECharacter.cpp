@@ -15,9 +15,6 @@
 
 AZulaOnUECharacter::AZulaOnUECharacter()
 {
-	// reset HP to max	
-	//*GetNameSafe(this)
-	UE_LOG(LogTemp, Display, TEXT("%s Constructor CurrentHP = %f"), *(this->GetName()), MaxHP);
 	CurrentHP = MaxHP;
 
 	// Set size for collision capsule
@@ -53,21 +50,19 @@ AZulaOnUECharacter::AZulaOnUECharacter()
 
 	// create the noise emitter component
 	PawnNoiseEmitter = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("Pawn Noise Emitter"));
-
-	//UKismetSystemLibrary
-	UE_LOG(LogTemp, Display, TEXT("Constructor AZulaOnUECharacter"));
 }
 
 void AZulaOnUECharacter::BeginPlay()
 {
+	printScreen("AZulaOnUECharacter::BeginPlay()");
+
 	Super::BeginPlay();
 	
 	// reset HP to max
-	UE_LOG(LogTemp, Display, TEXT("AZulaOnUECharacter BeginPlay CurrentHP = %f"), MaxHP);
 	CurrentHP = MaxHP;
 
 	// update the HUD
-	UE_LOG(LogTemp, Display, TEXT("AZulaOnUECharacter BeginPlay OnDamaged.Broadcast(1.0f);"));
+	printScreen("AZulaOnUECharacter BeginPlay OnDamaged.Broadcast(1.0f);");
 	OnDamaged.Broadcast(1.0f);
 }
 
@@ -81,7 +76,6 @@ void AZulaOnUECharacter::EndPlay(EEndPlayReason::Type EndPlayReason)
 
 void AZulaOnUECharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	UE_LOG(LogTemp, Display, TEXT("AZulaOnUECharacter::SetupPlayerInputComponent()"));
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
