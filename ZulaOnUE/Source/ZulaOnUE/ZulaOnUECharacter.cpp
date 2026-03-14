@@ -54,8 +54,29 @@ AZulaOnUECharacter::AZulaOnUECharacter()
 	UE_LOG(LogTemp, Display, TEXT("Constructor AZulaOnUECharacter"));
 }
 
+void AZulaOnUECharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	// reset HP to max
+	CurrentHP = MaxHP;
+
+	// update the HUD
+	UE_LOG(LogTemp, Display, TEXT("AZulaOnUECharacter BeginPlay OnDamaged.Broadcast(1.0f);"));
+	OnDamaged.Broadcast(1.0f);
+}
+
+void AZulaOnUECharacter::EndPlay(EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	// clear the respawn timer
+	GetWorld()->GetTimerManager().ClearTimer(RespawnTimer);
+}
+
 void AZulaOnUECharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{	
+{
+	UE_LOG(LogTemp, Display, TEXT("AZulaOnUECharacter::SetupPlayerInputComponent()"));
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
@@ -75,7 +96,6 @@ void AZulaOnUECharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 		UE_LOG(LogZulaOnUE, Error, TEXT("'%s' Failed to find an Enhanced Input Component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	}
 }
-
 
 void AZulaOnUECharacter::MoveInput(const FInputActionValue& Value)
 {
@@ -129,28 +149,28 @@ void AZulaOnUECharacter::DoJumpEnd()
 	StopJumping();
 }
 
-//float AZulaOnUECharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
-//{
-//	// ignore if already dead
-//	if (CurrentHP <= 0.0f)
-//	{
-//		return 0.0f;
-//	}
-//
-//	// Reduce HP
-//	CurrentHP -= Damage;
-//
-//	// Have we depleted HP?
-//	if (CurrentHP <= 0.0f)
-//	{
-//		Die();
-//	}
-//
-//	// update the HUD
-//	OnDamaged.Broadcast(FMath::Max(0.0f, CurrentHP / MaxHP));
-//
-//	return Damage;
-//}
+float AZulaOnUECharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	// ignore if already dead
+	if (CurrentHP <= 0.0f)
+	{
+		return 0.0f;
+	}
+
+	// Reduce HP
+	CurrentHP -= Damage;
+
+	// Have we depleted HP?
+	if (CurrentHP <= 0.0f)
+	{
+		Die();
+	}
+
+	// update the HUD
+	OnDamaged.Broadcast(FMath::Max(0.0f, CurrentHP / MaxHP));
+
+	return Damage;
+}
 
 void AZulaOnUECharacter::DoStartFiring()
 {

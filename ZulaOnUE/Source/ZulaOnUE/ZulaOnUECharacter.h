@@ -130,6 +130,9 @@ public:
 	/** Returns true if the character is dead */
 	bool IsDead() const;
 
+	/** Handle incoming damage */
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
 	//~Begin IShooterWeaponHolder interface
 
 	/** Attaches a weapon's meshes to the owner */
@@ -162,6 +165,12 @@ public:
 	//~End IShooterWeaponHolder interface
 
 protected:
+
+	/** Gameplay initialization */
+	virtual void BeginPlay() override;
+
+	/** Gameplay cleanup */
+	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
 	/** Called from Input Actions for movement input */
 	void MoveInput(const FInputActionValue& Value);
@@ -196,12 +205,6 @@ protected:
 	/** Handles switch weapon input */
 	UFUNCTION(BlueprintCallable, Category="Input")
 	void DoSwitchWeapon();
-
-	/** Gameplay initialization */
-	//virtual void BeginPlay() override;
-
-	/** Gameplay cleanup */
-	//virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
 	/** Set up input action bindings */
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;

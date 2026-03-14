@@ -86,7 +86,7 @@ void AShooterPlayerController::OnPossess(APawn* InPawn)
 	// subscribe to the pawn's OnDestroyed delegate
 	InPawn->OnDestroyed.AddDynamic(this, &AShooterPlayerController::OnPawnDestroyed);
 
-	// is this a shooter character?
+	// is this a Fps character?
 	if (AFpsCharacter* FpsCharacter = Cast<AFpsCharacter>(InPawn))
 	{
 		// add the player tag
