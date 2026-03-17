@@ -12,6 +12,8 @@
 #include "ShooterWeapon.h"
 #include "ShooterGameMode.h"
 #include "ZulaOnUE.h"
+#include "Kismet/GameplayStatics.h"
+#include "ZulaOnUEGameModeBase.h"
 
 AZulaOnUECharacter::AZulaOnUECharacter()
 {
@@ -50,6 +52,12 @@ AZulaOnUECharacter::AZulaOnUECharacter()
 
 	// create the noise emitter component
 	PawnNoiseEmitter = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("Pawn Noise Emitter"));
+
+	AZulaOnUEGameModeBase* ZulaGameMode = Cast<AZulaOnUEGameModeBase>(UGameplayStatics::GetGameMode(this));
+	if (ZulaGameMode)
+	{
+		RespawnTime = ZulaGameMode->GetRespawnTime();
+	}
 }
 
 void AZulaOnUECharacter::BeginPlay()
@@ -361,21 +369,12 @@ void AZulaOnUECharacter::Die()
 	// grant the death tag to the character
 	Tags.Add(DeathTag);
 
-	// from ShooterNPC.cpp
-	// 
 	// disable capsule collision
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	////
-
 
 	// stop character movement
 	GetCharacterMovement()->StopMovementImmediately();
-
-	// from ShooterNPC.cpp
-	// 
-	// disable capsule collision
 	GetCharacterMovement()->StopActiveMovement();
-	////
 
 	// disable controls
 	DisableInput(nullptr);
@@ -393,7 +392,7 @@ void AZulaOnUECharacter::Die()
 void AZulaOnUECharacter::OnRespawn()
 {
 	// destroy the character to force the PC to respawn
-	Destroy();
+	Destroy();	
 }
 
 bool AZulaOnUECharacter::IsDead() const

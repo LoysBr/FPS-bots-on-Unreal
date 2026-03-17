@@ -30,7 +30,7 @@ void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	Super::EndPlay(EndPlayReason);
 
 	// clear the death timer
-	GetWorld()->GetTimerManager().ClearTimer(DeathTimer);
+	//GetWorld()->GetTimerManager().ClearTimer(DeathTimer);
 }
 //
 //float AShooterNPC::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -160,14 +160,14 @@ void AShooterNPC::Die()
 	GetMesh()->SetSimulatePhysics(true);
 	GetMesh()->SetPhysicsBlendWeight(1.0f);
 
-	// schedule actor destruction
-	GetWorld()->GetTimerManager().SetTimer(DeathTimer, this, &AShooterNPC::DeferredDestruction, DeferredDestructionTime, false);
+	//// schedule actor destruction
+	//GetWorld()->GetTimerManager().SetTimer(DeathTimer, this, &AShooterNPC::DeferredDestruction, DeferredDestructionTime, false);
 }
 
-void AShooterNPC::DeferredDestruction()
-{
-	Destroy();
-}
+//void AShooterNPC::DeferredDestruction()
+//{
+//	Destroy();
+//}
 
 void AShooterNPC::StartShooting(AActor* ActorToShoot)
 {

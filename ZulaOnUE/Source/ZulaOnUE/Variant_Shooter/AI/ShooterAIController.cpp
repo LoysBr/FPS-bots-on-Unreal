@@ -1,6 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
-
 #include "Variant_Shooter/AI/ShooterAIController.h"
 #include "ShooterNPC.h"
 #include "Components/StateTreeAIComponent.h"
@@ -63,6 +60,16 @@ void AShooterAIController::SetCurrentTarget(AActor* Target)
 void AShooterAIController::ClearCurrentTarget()
 {
 	TargetEnemy = nullptr;
+}
+
+void AShooterAIController::SetZulaNPCId(short zulaPlayerId)
+{
+	this->ZulaNPCId = zulaPlayerId;
+}
+
+short AShooterAIController::GetZulaNPCId()
+{
+	return ZulaNPCId;
 }
 
 void AShooterAIController::OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)

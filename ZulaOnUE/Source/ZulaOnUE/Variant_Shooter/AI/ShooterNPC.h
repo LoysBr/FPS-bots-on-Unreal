@@ -34,8 +34,8 @@ protected:
 	FName RagdollCollisionProfile = FName("Ragdoll");
 
 	/** Time to wait after death before destroying this actor */
-	UPROPERTY(EditAnywhere, Category="Damage")
-	float DeferredDestructionTime = 5.0f;
+	//UPROPERTY(EditAnywhere, Category="Damage")
+	//float DeferredDestructionTime = 5.0f;
 
 	///** Team byte for this character */
 	//UPROPERTY(EditAnywhere, Category="Team")
@@ -82,7 +82,7 @@ protected:
 	//bool bIsDead = false;
 
 	/** Deferred destruction on death timer */
-	FTimerHandle DeathTimer;
+	//FTimerHandle DeathTimer;
 
 public:
 
@@ -141,7 +141,7 @@ protected:
 	virtual void Die() override;
 
 	/** Called after death to destroy the actor */
-	void DeferredDestruction();
+	//void DeferredDestruction();
 
 public:
 

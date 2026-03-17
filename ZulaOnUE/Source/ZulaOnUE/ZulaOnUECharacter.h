@@ -24,9 +24,6 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FBulletCountUpdatedDelegate, int32,
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDamagedDelegate, float, LifePercent);
 
 
-#define printScreen(text) if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 999, FColor::Black, text); \
-UE_LOG(LogTemp, Display, TEXT(text))
-
 UCLASS(abstract)
 class AZulaOnUECharacter : public ACharacter, public IShooterWeaponHolder
 {
@@ -114,8 +111,8 @@ protected:
 	/** Weapon currently equipped and ready to shoot with */
 	TObjectPtr<AShooterWeapon> CurrentWeapon;
 
-	UPROPERTY(EditAnywhere, Category = "Destruction", meta = (ClampMin = 0, ClampMax = 10, Units = "s"))
-	float RespawnTime = 5.0f;
+	//Will be overriden by ZulaOnUEGameModeBase.RespawnTime
+	float RespawnTime = 3.0f;
 
 	FTimerHandle RespawnTimer;
 
