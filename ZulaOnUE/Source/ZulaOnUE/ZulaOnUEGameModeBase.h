@@ -43,11 +43,10 @@ protected:
 
 	int32 NumberOfRealPlayers = 1; //for offline mode - use this when player online with several clients
 
-	USHORT NextZulaPlayerId = 0;
+	int32 NextZulaPlayerId = 0;
 
 	//METHODS
 protected:
-
 	/** Gameplay initialization */
 	virtual void BeginPlay() override;
 
@@ -58,16 +57,21 @@ protected:
 
 	void AddNewNPC();
 
+	UFUNCTION()
+	void RespawnNPC(int32 NPCId);
+
 	AShooterNPC* SpawnNewNPC();
 
-	void OnNPCDied();
+	void RegisterNPC(AShooterNPC* NPC, int32 NPCId);
+
+	UFUNCTION()
+	void OnNPCDied(int32 NPCId);
 
 	void GetRandomStartPointData(FVector& Location, FRotator& Rotation);
 
-	short GetNewZulaNPCId();
+	int32 GetNewZulaNPCId();
 
 public:
-
 	/** Increases the score for the given team */
 	void IncrementTeamScore(uint8 TeamByte);
 

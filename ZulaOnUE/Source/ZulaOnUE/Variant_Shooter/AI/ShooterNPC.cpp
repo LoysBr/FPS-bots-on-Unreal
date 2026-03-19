@@ -11,10 +11,17 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
+#include "ZulaOnUEGameModeBase.h"
+#include "ZulaOnUE.h"
+#include "Variant_Shooter/AI/ShooterAIController.h"
+#include "Components/StateTreeAIComponent.h"
 
 void AShooterNPC::BeginPlay()
 {
 	Super::BeginPlay();
+
+	OriginalCollisionProfile = GetMesh()->GetCollisionProfileName();
 
 	//// spawn the weapon
 	//FActorSpawnParameters SpawnParams;
@@ -30,7 +37,7 @@ void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	Super::EndPlay(EndPlayReason);
 
 	// clear the death timer
-	//GetWorld()->GetTimerManager().ClearTimer(DeathTimer);
+	GetWorld()->GetTimerManager().ClearTimer(DeathTimer);
 }
 //
 //float AShooterNPC::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -150,22 +157,46 @@ void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
 //
 void AShooterNPC::Die()
 {
+	printScreen("AShooterNPC::Die()");
 	Super::Die();
-
-	// call the delegate
-	OnPawnDeath.Broadcast();
 
 	// enable ragdoll physics on the third person mesh
 	GetMesh()->SetCollisionProfileName(RagdollCollisionProfile);
 	GetMesh()->SetSimulatePhysics(true);
 	GetMesh()->SetPhysicsBlendWeight(1.0f);
 
-	//// schedule actor destruction
-	//GetWorld()->GetTimerManager().SetTimer(DeathTimer, this, &AShooterNPC::DeferredDestruction, DeferredDestructionTime, false);
+	/*AZulaOnUEGameModeBase* ZulaGameMode = Cast<AZulaOnUEGameModeBase>(UGameplayStatics::GetGameMode(this));
+	if (ZulaGameMode)
+	{
+		GetWorld()->GetTimerManager().SetTimer(DeathTimer, this, &AShooterNPC::DeferredDestruction, ZulaGameMode->GetRespawnTime(), false);
+	}*/
 }
 
+//void AShooterNPC::Respawn()
+//{
+//	printScreen("AShooterNPC::Respawn()");
+//	GetMesh()->SetSimulatePhysics(false);
+//	GetMesh()->SetCollisionProfileName(OriginalCollisionProfile);
+//
+//	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+//
+//	Tags.Remove(DeathTag);
+//
+//	//EnableInput(nullptr);
+//
+//	if (AShooterAIController* AIController = Cast<AShooterAIController>(Controller.Get()))
+//	{
+//		printScreen("StateTreeAI->RestartLogic()");
+//		AIController->StateTreeAI->RestartLogic();
+//	}
+//
+//	CurrentHP = MaxHP;
+//}
+
+//TO REMOVE
 //void AShooterNPC::DeferredDestruction()
 //{
+//	printScreen("call AShooterNPC::DeferredDestruction()")
 //	Destroy();
 //}
 
@@ -191,4 +222,17 @@ void AShooterNPC::StopShooting()
 
 	// signal the weapon
 	CurrentWeapon->StopFiring();
+}
+
+int32 AShooterNPC::GetZulaNPCId()
+{
+	if (AShooterAIController* AIController = Cast<AShooterAIController>(Controller.Get()))
+	{
+		return AIController->GetZulaNPCId();
+	}
+	else
+	{
+		UE_LOG(LogZulaOnUE, Error, TEXT("AShooterNPC::GetZulaNPCId() => no valid controller. Returning -1"));
+		return -1;
+	}
 }

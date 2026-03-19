@@ -22,6 +22,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FBulletCountUpdatedDelegate, int32, MagazineSize, int32, Bullets);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDamagedDelegate, float, LifePercent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FZulaCharacterDeathDelegate, int32, ZulaId);
 
 
 UCLASS(abstract)
@@ -122,11 +123,9 @@ protected:
 public:
 	AZulaOnUECharacter();
 
-	///** Bullet count updated delegate */
 	FBulletCountUpdatedDelegate OnBulletCountUpdated;
-
-	///** Damaged delegate */
 	FDamagedDelegate OnDamaged;
+	FZulaCharacterDeathDelegate OnCharacterDied;
 
 	/** Returns the first person mesh **/
 	USkeletalMeshComponent* GetFirstPersonMesh() const { return FirstPersonMesh; }
@@ -227,7 +226,10 @@ protected:
 	void BP_OnDeath();
 
 	/** Called from the respawn timer to destroy this character and force the PC to respawn */
-	void OnRespawn();
+	void DeferredDestruction();
+
+public:
+	virtual int32 GetZulaNPCId() PURE_VIRTUAL(GetZulaNPCId, return -1;);
 
 };
 

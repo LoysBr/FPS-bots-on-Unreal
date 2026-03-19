@@ -7,8 +7,7 @@
 #include "ShooterWeaponHolder.h"
 #include "ShooterNPC.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPawnDeathDelegate);
-
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPawnDeathDelegate);
 class AShooterWeapon;
 
 /**
@@ -32,6 +31,8 @@ protected:
 	/** Name of the collision profile to use during ragdoll death */
 	UPROPERTY(EditAnywhere, Category="Damage")
 	FName RagdollCollisionProfile = FName("Ragdoll");
+
+	FName OriginalCollisionProfile;
 
 	/** Time to wait after death before destroying this actor */
 	//UPROPERTY(EditAnywhere, Category="Damage")
@@ -82,12 +83,12 @@ protected:
 	//bool bIsDead = false;
 
 	/** Deferred destruction on death timer */
-	//FTimerHandle DeathTimer;
+	FTimerHandle DeathTimer;
 
-public:
+//public:
 
 	/** Delegate called when this NPC dies */
-	FPawnDeathDelegate OnPawnDeath;
+	//FPawnDeathDelegate OnPawnDeath;
 
 protected:
 
@@ -140,6 +141,8 @@ protected:
 	/** Called when HP is depleted and the character should die */
 	virtual void Die() override;
 
+	//void Respawn();
+
 	/** Called after death to destroy the actor */
 	//void DeferredDestruction();
 
@@ -150,4 +153,6 @@ public:
 
 	/** Signals this character to stop shooting */
 	void StopShooting();
+
+	virtual int32 GetZulaNPCId() override;
 };

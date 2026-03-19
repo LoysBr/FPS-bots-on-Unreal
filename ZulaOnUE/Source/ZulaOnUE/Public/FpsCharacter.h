@@ -15,4 +15,7 @@ class ZULAONUE_API AFpsCharacter : public AZulaOnUECharacter
 	GENERATED_BODY()
 	
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+
+public:
+	virtual int32 GetZulaNPCId() override;
 };

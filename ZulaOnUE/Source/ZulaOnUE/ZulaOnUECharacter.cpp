@@ -63,15 +63,8 @@ AZulaOnUECharacter::AZulaOnUECharacter()
 void AZulaOnUECharacter::BeginPlay()
 {
 	printScreen("AZulaOnUECharacter::BeginPlay()");
-
 	Super::BeginPlay();
 	
-	// spawn the weapon
-	/*FActorSpawnParameters SpawnParams;
-	SpawnParams.Owner = this;
-	SpawnParams.Instigator = this;
-	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	CurrentWeapon = GetWorld()->SpawnActor<AShooterWeapon>(StartWeapon, GetActorTransform(), SpawnParams);*/
 	AddWeaponClass(StartWeapon);
 
 	// reset HP to max
@@ -366,6 +359,8 @@ void AZulaOnUECharacter::Die()
 		GM->IncrementTeamScore(TeamByte);
 	}
 
+	OnCharacterDied.Broadcast(GetZulaNPCId());
+
 	// grant the death tag to the character
 	Tags.Add(DeathTag);
 
@@ -383,17 +378,18 @@ void AZulaOnUECharacter::Die()
 	OnBulletCountUpdated.Broadcast(0, 0);
 
 	// call the BP handler
-	BP_OnDeath();
+	BP_OnDeath();	
 
 	// schedule character respawn
-	GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &AZulaOnUECharacter::OnRespawn, RespawnTime, false);
+	GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &AZulaOnUECharacter::DeferredDestruction, RespawnTime, false);
 }
 
-void AZulaOnUECharacter::OnRespawn()
+void AZulaOnUECharacter::DeferredDestruction()
 {
-	// destroy the character to force the PC to respawn
+	printScreen("call AShooterNPC::DeferredDestruction()")
 	Destroy();	
 }
+
 
 bool AZulaOnUECharacter::IsDead() const
 {

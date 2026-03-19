@@ -20,17 +20,12 @@ UCLASS(abstract)
 class ZULAONUE_API AShooterAIController : public AAIController
 {
 	GENERATED_BODY()
-	
-	/** Runs the behavior StateTree for this NPC */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
-	UStateTreeAIComponent* StateTreeAI;
 
 	/** Detects other actors through sight, hearing and other senses */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	UAIPerceptionComponent* AIPerception;
 
 protected:
-
 	/** Team tag for pawn friend or foe identification */
 	UPROPERTY(EditAnywhere, Category="Shooter")
 	FName TeamTag = FName("Enemy");
@@ -39,9 +34,12 @@ protected:
 	TObjectPtr<AActor> TargetEnemy;
 
 	//UPROPERTY(EditAnywhere, Category = "PlayerInfo")
-	short ZulaNPCId = 1;
+	int32 ZulaNPCId = 1;
 
 public:
+	/** Runs the behavior StateTree for this NPC */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UStateTreeAIComponent* StateTreeAI;
 
 	/** Called when an AI perception has been updated. StateTree task delegate hook */
 	FShooterPerceptionUpdatedDelegate OnShooterPerceptionUpdated;
@@ -58,7 +56,7 @@ protected:
 
 	/** Called when the possessed pawn dies */
 	UFUNCTION()
-	void OnPawnDeath();
+	void OnPawnDeath(int32 id);
 
 	/** Called when the AI perception component updates a perception on a given actor */
 	UFUNCTION()
@@ -78,9 +76,9 @@ public:
 	/** Returns the targeted enemy */
 	AActor* GetCurrentTarget() const { return TargetEnemy; };
 
-	void SetZulaNPCId(short ZulaNPCId);
+	void SetZulaNPCId(int32 ZulaNPCId);
 
 	//UFUNCTION()
-	short GetZulaNPCId();
+	int32 GetZulaNPCId();
 
 };

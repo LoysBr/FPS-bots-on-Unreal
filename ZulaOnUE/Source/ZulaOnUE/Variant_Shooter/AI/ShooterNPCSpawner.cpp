@@ -64,12 +64,12 @@ void AShooterNPCSpawner::SpawnNPC()
 		if (SpawnedNPC)
 		{
 			// subscribe to the death delegate
-			SpawnedNPC->OnPawnDeath.AddDynamic(this, &AShooterNPCSpawner::OnNPCDied);
+			SpawnedNPC->OnCharacterDied.AddDynamic(this, &AShooterNPCSpawner::OnNPCDied);
 		}
 	}
 }
 
-void AShooterNPCSpawner::OnNPCDied()
+void AShooterNPCSpawner::OnNPCDied(int32 id)
 {
 	// decrease the spawn counter
 	--SpawnCount;

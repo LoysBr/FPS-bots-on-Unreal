@@ -22,3 +22,8 @@ void AFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	}
 
 }
+
+int32 AFpsCharacter::GetZulaNPCId()
+{
+	return 0;
+}
