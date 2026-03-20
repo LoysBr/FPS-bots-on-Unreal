@@ -19,6 +19,15 @@ public:
 	AZulaOnUEGameModeBase();
 
 protected:
+	UPROPERTY(EditAnywhere, Category = "Tweak", meta = (ClampMin = 1, ClampMax = 10, Units = "s"))
+	float RespawnTime = 5.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Tweak", meta = (ClampMin = 1, ClampMax = 10))
+	int32 DesiredNumberOfPlayers = 4;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "NPC")
+	TSubclassOf<AShooterNPC> NPCClass;
+
 	/** Type of UI widget to spawn */
 	UPROPERTY(EditAnywhere, Category = "UI")
 	TSubclassOf<UShooterUI> ShooterUIClass;
@@ -29,21 +38,12 @@ protected:
 	/** Map of scores by team ID */
 	TMap<uint8, int32> TeamScores;
 
-	UPROPERTY(EditAnywhere, Category = "Tweak", meta = (ClampMin = 1, ClampMax = 10, Units = "s"))
-	float RespawnTime = 5.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "NPC")
-	TSubclassOf<AShooterNPC> NPCClass;
-
 	TStaticArray<TObjectPtr<AShooterAIController>, 10> NPCControllers;
 
-	int32 MaxNumberOfPlayers; //init with NPCControllers size
-
-	int32 NumberOfNPCsInGame = 0;
-
+	int32 DesiredNumberOfNPCs = 1;
+	int32 NumberOfNPCsSpawned = 0;
 	int32 NumberOfRealPlayers = 1; //for offline mode - use this when player online with several clients
-
-	int32 NextZulaPlayerId = 0;
+	int32 NextZulaNPCId = 0;
 
 	//METHODS
 protected:
@@ -52,6 +52,9 @@ protected:
 
 	/** Gameplay cleanup */
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	//In Online match I excpect to have a pre-match phase when Clients connect, then the Match can start
+	void OnMatchStart();
 
 	void ClearNPCs();
 

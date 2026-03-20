@@ -7,7 +7,6 @@
 
 AZulaOnUEGameModeBase::AZulaOnUEGameModeBase()
 {
-	MaxNumberOfPlayers = NPCControllers.Num();
 }
 
 void AZulaOnUEGameModeBase::BeginPlay()
@@ -18,7 +17,19 @@ void AZulaOnUEGameModeBase::BeginPlay()
 	ShooterUI = CreateWidget<UShooterUI>(UGameplayStatics::GetPlayerController(GetWorld(), 0), ShooterUIClass);
 	ShooterUI->AddToViewport(0);
 
-	AddNewNPC();
+	NumberOfNPCsSpawned = 0;
+
+	bool isOnlineMatch = false;
+	if (isOnlineMatch)
+	{
+		UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::BeginPlay : ONLINE MATCH"));
+	}
+	else
+	{
+		NumberOfRealPlayers = 1;
+		NextZulaNPCId = 0;
+		OnMatchStart();
+	}
 }
 
 void AZulaOnUEGameModeBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -27,6 +38,16 @@ void AZulaOnUEGameModeBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 	GetWorld()->GetTimerManager().ClearAllTimersForObject(this);
 	ClearNPCs();
+}
+
+void AZulaOnUEGameModeBase::OnMatchStart()
+{
+	DesiredNumberOfNPCs = DesiredNumberOfPlayers - NumberOfRealPlayers;
+
+	for (int i = 0; i < DesiredNumberOfNPCs; i++)
+	{
+		AddNewNPC();
+	}
 }
 
 void AZulaOnUEGameModeBase::IncrementTeamScore(uint8 TeamByte)
@@ -51,17 +72,17 @@ void AZulaOnUEGameModeBase::IncrementTeamScore(uint8 TeamByte)
 /// </summary>
 void AZulaOnUEGameModeBase::AddNewNPC()
 {
-	printScreen("AZulaOnUEGameModeBase::AddNewNPC");
-	if (NumberOfNPCsInGame + NumberOfRealPlayers >= MaxNumberOfPlayers)
+	UE_LOG(LogTemp, Display, TEXT("call AZulaOnUEGameModeBase::AddNewNPC()"));
+	if (NumberOfNPCsSpawned + NumberOfRealPlayers >= DesiredNumberOfPlayers)
 	{
 		UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::AddNewNPC : too many players already, returning"));
 		return;
 	}
 
-	int32 id = GetNewZulaNPCId();
-	if (id >= MaxNumberOfPlayers)
+	int32 id = NextZulaNPCId;
+	if (id >= DesiredNumberOfNPCs)
 	{
-		UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::AddNewNPC : GetNewZulaNPCId returned %hd > MaxNumberOfPlayers, returning"), id);
+		UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::AddNewNPC : GetNewZulaNPCId returned %hd > DesiredNumberOfPlayers, returning"), id);
 		return;
 	} 
 	else if (id < 0)
@@ -76,7 +97,7 @@ void AZulaOnUEGameModeBase::AddNewNPC()
 
 void AZulaOnUEGameModeBase::RegisterNPC(AShooterNPC* NPC, int32 NPCId)
 {
-	printScreen("AZulaOnUEGameModeBase::RegisterNPC");
+	UE_LOG(LogTemp, Display, TEXT("call AZulaOnUEGameModeBase::RegisterNPC()"));
 	if (!NPC)
 	{
 		UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::AddNewNPC : error when Spawning NPC, returning"));
@@ -89,7 +110,9 @@ void AZulaOnUEGameModeBase::RegisterNPC(AShooterNPC* NPC, int32 NPCId)
 			AIController->SetZulaNPCId(NPCId);
 
 			NPCControllers[NPCId] = AIController;
-			NumberOfNPCsInGame++;
+			NumberOfNPCsSpawned++;
+			NextZulaNPCId++;
+			UE_LOG(LogTemp, Display, TEXT("NextZulaNPCId = % i"), NextZulaNPCId);
 
 			NPC->OnCharacterDied.AddDynamic(this, &AZulaOnUEGameModeBase::OnNPCDied);
 		}
@@ -103,9 +126,9 @@ void AZulaOnUEGameModeBase::RegisterNPC(AShooterNPC* NPC, int32 NPCId)
 void AZulaOnUEGameModeBase::RespawnNPC(int32 NPCId)
 {
 	printScreen("AZulaOnUEGameModeBase::RespawnNPC");
-	if (NPCId < 0 || NPCId >= NumberOfNPCsInGame)
+	if (NPCId < 0 || NPCId >= NumberOfNPCsSpawned)
 	{
-		UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::RespawnNPC( %hd ) : invalid NPCId"), NPCId);
+		UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::RespawnNPC( %i ) : invalid NPCId. -- (NumberOfNPCsSpawned: %i"), NPCId, NumberOfNPCsSpawned);
 		return;
 	}
 
@@ -123,7 +146,7 @@ void AZulaOnUEGameModeBase::RespawnNPC(int32 NPCId)
 /// <returns>The created Actor, or NULL</returns>
 AShooterNPC* AZulaOnUEGameModeBase::SpawnNewNPC()
 {
-	printScreen("AZulaOnUEGameModeBase::SpawnNewNPC");
+	UE_LOG(LogTemp, Display, TEXT("call AZulaOnUEGameModeBase::SpawnNewNPC()"));
 
 	if (!IsValid(NPCClass))
 	{
@@ -152,8 +175,8 @@ AShooterNPC* AZulaOnUEGameModeBase::SpawnNewNPC()
 }
 
 void AZulaOnUEGameModeBase::GetRandomStartPointData(FVector &Location, FRotator &Rotation)
-{	
-	printScreen("call AZulaOnUEGameModeBase::GetRandomStartPointData()")
+{
+	UE_LOG(LogTemp, Display, TEXT("call AZulaOnUEGameModeBase::GetRandomStartPointData()"));
 
 	AActor* StartSpot = ChoosePlayerStart(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if (StartSpot == nullptr)
@@ -175,7 +198,9 @@ void AZulaOnUEGameModeBase::GetRandomStartPointData(FVector &Location, FRotator 
 /// <returns>index of a free NPCControllers element</returns>
 int32 AZulaOnUEGameModeBase::GetNewZulaNPCId()
 {
-	int32 ret = 0;
+	UE_LOG(LogZulaOnUE, Error, TEXT("TO BE IMPLEMENTED"));
+
+	/*int32 ret = 0;
 
 	for (TObjectPtr<AShooterAIController> NPCController : NPCControllers)
 	{
@@ -185,15 +210,15 @@ int32 AZulaOnUEGameModeBase::GetNewZulaNPCId()
 		}
 
 		ret++;
-	}
+	}*/
 
 	UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::GetNewZulaNPCId could not find a null element in NPCControllers, means there are too many NPC already!"));
-	return ret;
+	return 0;
 }
 
 void AZulaOnUEGameModeBase::OnNPCDied(int32 NPCId)
 {
-	printScreen("call AZulaOnUEGameModeBase::GetRandomStartPointData()")
+	printScreen("call AZulaOnUEGameModeBase::OnNPCDied()")
 
 	// schedule the next NPC spawn
 	FTimerHandle RespawnTimer;
@@ -225,5 +250,6 @@ void AZulaOnUEGameModeBase::ClearNPCs()
 		NPCController->Destroy();
 	}
 
-	NumberOfNPCsInGame = 0;
+	NumberOfNPCsSpawned = 0;
+	NextZulaNPCId = 0;
 }

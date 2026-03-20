@@ -157,7 +157,7 @@ void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
 //
 void AShooterNPC::Die()
 {
-	printScreen("AShooterNPC::Die()");
+	//printScreen("AShooterNPC::Die()");
 	Super::Die();
 
 	// enable ragdoll physics on the third person mesh

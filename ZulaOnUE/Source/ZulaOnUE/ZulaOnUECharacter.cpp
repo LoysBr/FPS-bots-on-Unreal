@@ -62,7 +62,6 @@ AZulaOnUECharacter::AZulaOnUECharacter()
 
 void AZulaOnUECharacter::BeginPlay()
 {
-	printScreen("AZulaOnUECharacter::BeginPlay()");
 	Super::BeginPlay();
 	
 	AddWeaponClass(StartWeapon);
@@ -71,7 +70,7 @@ void AZulaOnUECharacter::BeginPlay()
 	CurrentHP = MaxHP;
 
 	// update the HUD
-	printScreen("AZulaOnUECharacter BeginPlay OnDamaged.Broadcast(1.0f);");
+	//printScreen("AZulaOnUECharacter BeginPlay OnDamaged.Broadcast(1.0f);");
 	OnDamaged.Broadcast(1.0f);
 }
 
@@ -386,7 +385,7 @@ void AZulaOnUECharacter::Die()
 
 void AZulaOnUECharacter::DeferredDestruction()
 {
-	printScreen("call AShooterNPC::DeferredDestruction()")
+	//printScreen("call AShooterNPC::DeferredDestruction()")
 	Destroy();	
 }
 
