@@ -19,11 +19,17 @@ public:
 	AZulaOnUEGameModeBase();
 
 protected:
-	UPROPERTY(EditAnywhere, Category = "Tweak", meta = (ClampMin = 1, ClampMax = 10, Units = "s"))
-	float RespawnTime = 5.0f;
-
 	UPROPERTY(EditAnywhere, Category = "Tweak", meta = (ClampMin = 1, ClampMax = 10))
 	int32 DesiredNumberOfPlayers = 4;
+
+	UPROPERTY(EditAnywhere, Category = "Tweak", meta = (ToolTip = "Create NPC until reaching 'DesiredNumberOfPlayers' if there is not enough real players"))
+	bool FillAllFreeSlotsWithNPCs = true;
+
+	UPROPERTY(EditAnywhere, Category = "Tweak", meta = (EditCondition = "FillAllFreeSlotsWithNPCs==false", ClampMin = 0, ClampMax = 9))
+	int32 CustomNumberOfNPCs = 1;
+
+	UPROPERTY(EditAnywhere, Category = "Tweak", meta = (ClampMin = 1, ClampMax = 10, Units = "s"))
+	float RespawnTime = 5.0f;	
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "NPC")
 	TSubclassOf<AShooterNPC> NPCClass;

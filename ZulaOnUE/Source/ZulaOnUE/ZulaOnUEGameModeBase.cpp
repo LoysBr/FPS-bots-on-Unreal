@@ -42,8 +42,15 @@ void AZulaOnUEGameModeBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void AZulaOnUEGameModeBase::OnMatchStart()
 {
-	DesiredNumberOfNPCs = DesiredNumberOfPlayers - NumberOfRealPlayers;
-
+	if (FillAllFreeSlotsWithNPCs)
+	{
+		DesiredNumberOfNPCs = DesiredNumberOfPlayers - NumberOfRealPlayers;
+	}
+	else
+	{
+		DesiredNumberOfNPCs = CustomNumberOfNPCs;
+	}
+	
 	for (int i = 0; i < DesiredNumberOfNPCs; i++)
 	{
 		AddNewNPC();
