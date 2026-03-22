@@ -66,6 +66,6 @@ protected:
 
 	/** Called when the spawned NPC has died */
 	UFUNCTION()
-	void OnNPCDied();
+	void OnNPCDied(int32 id);
 
 };

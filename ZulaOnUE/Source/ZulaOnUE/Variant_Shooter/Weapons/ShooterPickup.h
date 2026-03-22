@@ -87,7 +87,7 @@ protected:
 	void RespawnPickup();
 
 	/** Passes control to Blueprint to animate the pickup respawn. Should end by calling FinishRespawn */
-	UFUNCTION(BlueprintImplementableEvent, Category="Pickup", meta = (DisplayName = "OnRespawn"))
+	UFUNCTION(BlueprintImplementableEvent, Category="Pickup", meta = (DisplayName = "DeferredDestruction"))
 	void BP_OnRespawn();
 
 	/** Enables this pickup after respawning */

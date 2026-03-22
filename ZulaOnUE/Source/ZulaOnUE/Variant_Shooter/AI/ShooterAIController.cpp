@@ -1,6 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
-
 #include "Variant_Shooter/AI/ShooterAIController.h"
 #include "ShooterNPC.h"
 #include "Components/StateTreeAIComponent.h"
@@ -33,14 +30,14 @@ void AShooterAIController::OnPossess(APawn* InPawn)
 		NPC->Tags.Add(TeamTag);
 
 		// subscribe to the pawn's OnDeath delegate
-		NPC->OnPawnDeath.AddDynamic(this, &AShooterAIController::OnPawnDeath);
+		NPC->OnCharacterDied.AddDynamic(this, &AShooterAIController::OnPawnDeath);
 
 		// start AI logic
 		StateTreeAI->StartLogic();
 	}
 }
 
-void AShooterAIController::OnPawnDeath()
+void AShooterAIController::OnPawnDeath(int32 id)
 {
 	// stop movement
 	GetPathFollowingComponent()->AbortMove(*this, FPathFollowingResultFlags::UserAbort);
@@ -63,6 +60,16 @@ void AShooterAIController::SetCurrentTarget(AActor* Target)
 void AShooterAIController::ClearCurrentTarget()
 {
 	TargetEnemy = nullptr;
+}
+
+void AShooterAIController::SetZulaNPCId(int32 zulaPlayerId)
+{
+	this->ZulaNPCId = zulaPlayerId;
+}
+
+int32 AShooterAIController::GetZulaNPCId()
+{
+	return ZulaNPCId;
 }
 
 void AShooterAIController::OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
