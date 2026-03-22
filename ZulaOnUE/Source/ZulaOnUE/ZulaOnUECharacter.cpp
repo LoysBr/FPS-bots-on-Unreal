@@ -51,18 +51,18 @@ AZulaOnUECharacter::AZulaOnUECharacter()
 	GetCharacterMovement()->AirControl = 0.5f;
 
 	// create the noise emitter component
-	PawnNoiseEmitter = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("Pawn Noise Emitter"));
+	PawnNoiseEmitter = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("Pawn Noise Emitter"));	
+}
+
+void AZulaOnUECharacter::BeginPlay()
+{
+	Super::BeginPlay();
 
 	AZulaOnUEGameModeBase* ZulaGameMode = Cast<AZulaOnUEGameModeBase>(UGameplayStatics::GetGameMode(this));
 	if (ZulaGameMode)
 	{
 		RespawnTime = ZulaGameMode->GetRespawnTime();
 	}
-}
-
-void AZulaOnUECharacter::BeginPlay()
-{
-	Super::BeginPlay();
 	
 	AddWeaponClass(StartWeapon);
 
