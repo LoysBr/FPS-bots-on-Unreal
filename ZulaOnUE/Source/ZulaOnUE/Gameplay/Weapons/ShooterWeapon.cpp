@@ -1,6 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
-
 #include "ShooterWeapon.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Engine/World.h"
@@ -11,6 +8,7 @@
 #include "Animation/AnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/Pawn.h"
+#include "ZulaOnUE.h"
 
 AShooterWeapon::AShooterWeapon()
 {
@@ -110,7 +108,6 @@ void AShooterWeapon::StartFiring()
 		{
 			GetWorld()->GetTimerManager().SetTimer(RefireTimer, this, &AShooterWeapon::Fire, TimeSinceLastShot, false);
 		}
-
 	}
 }
 
@@ -145,11 +142,11 @@ void AShooterWeapon::Fire()
 	{
 		// schedule the next shot
 		GetWorld()->GetTimerManager().SetTimer(RefireTimer, this, &AShooterWeapon::Fire, RefireRate, false);
-	} else {
-
+	} 
+	else 
+	{
 		// for semi-auto weapons, schedule the cooldown notification
 		GetWorld()->GetTimerManager().SetTimer(RefireTimer, this, &AShooterWeapon::FireCooldownExpired, RefireRate, false);
-
 	}
 }
 
@@ -185,6 +182,7 @@ void AShooterWeapon::FireProjectile(const FVector& TargetLocation)
 	// if the clip is depleted, reload it
 	if (CurrentBullets <= 0)
 	{
+		printScreen("raise event Magazine is Empty!");
 		CurrentBullets = MagazineSize;
 	}
 

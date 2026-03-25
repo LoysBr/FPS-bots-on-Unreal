@@ -132,7 +132,7 @@ void AZulaOnUEGameModeBase::RegisterNPC(ANPCCharacter* NPC, int32 NPCId)
 
 void AZulaOnUEGameModeBase::RespawnNPC(int32 NPCId)
 {
-	printScreen("AZulaOnUEGameModeBase::RespawnNPC");
+	//printScreen("AZulaOnUEGameModeBase::RespawnNPC");
 	if (NPCId < 0 || NPCId >= NumberOfNPCsSpawned)
 	{
 		UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::RespawnNPC( %i ) : invalid NPCId. -- (NumberOfNPCsSpawned: %i"), NPCId, NumberOfNPCsSpawned);
@@ -225,7 +225,7 @@ int32 AZulaOnUEGameModeBase::GetNewZulaNPCId()
 
 void AZulaOnUEGameModeBase::OnNPCDied(int32 NPCId)
 {
-	printScreen("call AZulaOnUEGameModeBase::OnNPCDied()")
+	//printScreen("call AZulaOnUEGameModeBase::OnNPCDied()")
 
 	// schedule the next NPC spawn
 	FTimerHandle RespawnTimer;
