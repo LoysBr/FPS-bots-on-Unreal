@@ -1,11 +1,11 @@
-#include "Variant_Shooter/AI/ShooterAIController.h"
-#include "ShooterNPC.h"
+#include "NPCController.h"
+#include "NPCCharacter.h"
 #include "Components/StateTreeAIComponent.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Navigation/PathFollowingComponent.h"
 #include "AI/Navigation/PathFollowingAgentInterface.h"
 
-AShooterAIController::AShooterAIController()
+ANPCController::ANPCController()
 {
 	// create the StateTree component
 	StateTreeAI = CreateDefaultSubobject<UStateTreeAIComponent>(TEXT("StateTreeAI"));
@@ -15,29 +15,29 @@ AShooterAIController::AShooterAIController()
 	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception"));
 
 	// subscribe to the AI perception delegates
-	AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AShooterAIController::OnPerceptionUpdated);
-	AIPerception->OnTargetPerceptionForgotten.AddDynamic(this, &AShooterAIController::OnPerceptionForgotten);
+	AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &ANPCController::OnPerceptionUpdated);
+	AIPerception->OnTargetPerceptionForgotten.AddDynamic(this, &ANPCController::OnPerceptionForgotten);
 }
 
-void AShooterAIController::OnPossess(APawn* InPawn)
+void ANPCController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
 	// ensure we're possessing an NPC
-	if (AShooterNPC* NPC = Cast<AShooterNPC>(InPawn))
+	if (ANPCCharacter* NPC = Cast<ANPCCharacter>(InPawn))
 	{
 		// add the team tag to the pawn
 		NPC->Tags.Add(TeamTag);
 
 		// subscribe to the pawn's OnDeath delegate
-		NPC->OnCharacterDied.AddDynamic(this, &AShooterAIController::OnPawnDeath);
+		NPC->OnCharacterDied.AddDynamic(this, &ANPCController::OnPawnDeath);
 
 		// start AI logic
 		StateTreeAI->StartLogic();
 	}
 }
 
-void AShooterAIController::OnPawnDeath(int32 id)
+void ANPCController::OnPawnDeath(int32 id)
 {
 	// stop movement
 	GetPathFollowingComponent()->AbortMove(*this, FPathFollowingResultFlags::UserAbort);
@@ -52,33 +52,33 @@ void AShooterAIController::OnPawnDeath(int32 id)
 	Destroy();
 }
 
-void AShooterAIController::SetCurrentTarget(AActor* Target)
+void ANPCController::SetCurrentTarget(AActor* Target)
 {
 	TargetEnemy = Target;
 }
 
-void AShooterAIController::ClearCurrentTarget()
+void ANPCController::ClearCurrentTarget()
 {
 	TargetEnemy = nullptr;
 }
 
-void AShooterAIController::SetZulaNPCId(int32 zulaPlayerId)
+void ANPCController::SetZulaNPCId(int32 zulaPlayerId)
 {
 	this->ZulaNPCId = zulaPlayerId;
 }
 
-int32 AShooterAIController::GetZulaNPCId()
+int32 ANPCController::GetZulaNPCId()
 {
 	return ZulaNPCId;
 }
 
-void AShooterAIController::OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
+void ANPCController::OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	// pass the data to the StateTree delegate hook
 	OnShooterPerceptionUpdated.ExecuteIfBound(Actor, Stimulus);
 }
 
-void AShooterAIController::OnPerceptionForgotten(AActor* Actor)
+void ANPCController::OnPerceptionForgotten(AActor* Actor)
 {
 	// pass the data to the StateTree delegate hook
 	OnShooterPerceptionForgotten.ExecuteIfBound(Actor);

@@ -5,12 +5,11 @@
 #include "CoreMinimal.h"
 #include "StateTreeTaskBase.h"
 #include "StateTreeConditionBase.h"
+#include "StateTreeUtility.generated.h"
 
-#include "ShooterStateTreeUtility.generated.h"
-
-class AShooterNPC;
+class ANPCCharacter;
 class AAIController;
-class AShooterAIController;
+class ANPCController;
 
 /**
  *  Instance data struct for the FStateTreeLineOfSightToTargetCondition condition
@@ -22,7 +21,7 @@ struct FStateTreeLineOfSightToTargetConditionInstanceData
 	
 	/** Targeting character */
 	UPROPERTY(EditAnywhere, Category = "Context")
-	AShooterNPC* Character;
+	ANPCCharacter* Character;
 
 	/** Target to check line of sight for */
 	UPROPERTY(EditAnywhere, Category = "Condition")
@@ -206,7 +205,7 @@ struct FStateTreeShootAtTargetInstanceData
 
 	/** NPC that will do the shooting */
 	UPROPERTY(EditAnywhere, Category = Context)
-	TObjectPtr<AShooterNPC> Character;
+	TObjectPtr<ANPCCharacter> Character;
 
 	/** Target to shoot at */
 	UPROPERTY(EditAnywhere, Category = Input)
@@ -248,11 +247,11 @@ struct FStateTreeSenseEnemiesInstanceData
 
 	/** Sensing AI Controller */
 	UPROPERTY(EditAnywhere, Category = Context)
-	TObjectPtr<AShooterAIController> Controller;
+	TObjectPtr<ANPCController> Controller;
 
 	/** Sensing NPC */
 	UPROPERTY(EditAnywhere, Category = Context)
-	TObjectPtr<AShooterNPC> Character;
+	TObjectPtr<ANPCCharacter> Character;
 
 	/** Sensed actor to target */
 	UPROPERTY(EditAnywhere, Category = Output)

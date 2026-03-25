@@ -1,10 +1,8 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "ShooterAIController.generated.h"
+#include "NPCController.generated.h"
 
 class UStateTreeAIComponent;
 class UAIPerceptionComponent;
@@ -17,7 +15,7 @@ DECLARE_DELEGATE_OneParam(FShooterPerceptionForgottenDelegate, AActor*);
  *  Simple AI Controller for a first person shooter enemy
  */
 UCLASS(abstract)
-class ZULAONUE_API AShooterAIController : public AAIController
+class ZULAONUE_API ANPCController : public AAIController
 {
 	GENERATED_BODY()
 
@@ -48,7 +46,7 @@ public:
 	FShooterPerceptionForgottenDelegate OnShooterPerceptionForgotten;
 
 public:
-	AShooterAIController();
+	ANPCController();
 
 protected:
 	/** Pawn initialization */

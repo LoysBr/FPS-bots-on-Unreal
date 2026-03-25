@@ -2,7 +2,7 @@
 
 
 #include "Variant_Shooter/ShooterGameMode.h"
-#include "ShooterUI.h"
+#include "Gameplay/UI/ShooterUI.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 

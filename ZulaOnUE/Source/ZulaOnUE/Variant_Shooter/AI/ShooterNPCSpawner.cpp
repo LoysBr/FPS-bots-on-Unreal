@@ -7,7 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/ArrowComponent.h"
 #include "TimerManager.h"
-#include "ShooterNPC.h"
+#include "NPCCharacter.h"
 
 // Sets default values
 AShooterNPCSpawner::AShooterNPCSpawner()
@@ -58,7 +58,7 @@ void AShooterNPCSpawner::SpawnNPC()
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
-		AShooterNPC* SpawnedNPC = GetWorld()->SpawnActor<AShooterNPC>(NPCClass, SpawnCapsule->GetComponentTransform(), SpawnParams);
+		ANPCCharacter* SpawnedNPC = GetWorld()->SpawnActor<ANPCCharacter>(NPCClass, SpawnCapsule->GetComponentTransform(), SpawnParams);
 
 		// was the NPC successfully created?
 		if (SpawnedNPC)

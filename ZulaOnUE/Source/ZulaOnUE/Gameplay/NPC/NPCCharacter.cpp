@@ -1,7 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
-
-#include "Variant_Shooter/AI/ShooterNPC.h"
+#include "NPCCharacter.h"
 #include "ShooterWeapon.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Camera/CameraComponent.h"
@@ -14,10 +11,10 @@
 #include "Kismet/GameplayStatics.h"
 #include "ZulaOnUEGameModeBase.h"
 #include "ZulaOnUE.h"
-#include "Variant_Shooter/AI/ShooterAIController.h"
+#include "NPCController.h"
 #include "Components/StateTreeAIComponent.h"
 
-void AShooterNPC::BeginPlay()
+void ANPCCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -32,7 +29,7 @@ void AShooterNPC::BeginPlay()
 	///*CurrentWeapon = GetWorld()->SpawnActor<AShooterWeapon>(StartWeapon, GetActorTransform(), SpawnParams);*/
 }
 
-void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
+void ANPCCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 
@@ -40,7 +37,7 @@ void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	GetWorld()->GetTimerManager().ClearTimer(DeathTimer);
 }
 //
-//float AShooterNPC::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+//float ANPCCharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 //{
 //	// ignore if already dead
 //	if (bIsDead)
@@ -60,7 +57,7 @@ void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
 //	return Damage;
 //}
 //
-//void AShooterNPC::AttachWeaponMeshes(AShooterWeapon* WeaponToAttach)
+//void ANPCCharacter::AttachWeaponMeshes(AShooterWeapon* WeaponToAttach)
 //{
 //	const FAttachmentTransformRules AttachmentRule(EAttachmentRule::SnapToTarget, false);
 //
@@ -72,22 +69,22 @@ void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
 //	WeaponToAttach->GetThirdPersonMesh()->AttachToComponent(GetMesh(), AttachmentRule, ThirdPersonWeaponSocket);
 //}
 //
-//void AShooterNPC::PlayFiringMontage(UAnimMontage* Montage)
+//void ANPCCharacter::PlayFiringMontage(UAnimMontage* Montage)
 //{
 //	// unused
 //}
 //
-//void AShooterNPC::AddWeaponRecoil(float Recoil)
+//void ANPCCharacter::AddWeaponRecoil(float Recoil)
 //{
 //	// unused
 //}
 //
-//void AShooterNPC::UpdateWeaponHUD(int32 CurrentAmmo, int32 MagazineSize)
+//void ANPCCharacter::UpdateWeaponHUD(int32 CurrentAmmo, int32 MagazineSize)
 //{
 //	// unused
 //}
 //
-//FVector AShooterNPC::GetWeaponTargetLocation()
+//FVector ANPCCharacter::GetWeaponTargetLocation()
 //{
 //	// start aiming from the camera location
 //	const FVector AimSource = GetFirstPersonCameraComponent()->GetComponentLocation();
@@ -130,22 +127,22 @@ void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
 //	return OutHit.bBlockingHit ? OutHit.ImpactPoint : OutHit.TraceEnd;
 //}
 //
-//void AShooterNPC::AddWeaponClass(const TSubclassOf<AShooterWeapon>& InWeaponClass)
+//void ANPCCharacter::AddWeaponClass(const TSubclassOf<AShooterWeapon>& InWeaponClass)
 //{
 //	// unused
 //}
 //
-//void AShooterNPC::OnWeaponActivated(AShooterWeapon* InWeapon)
+//void ANPCCharacter::OnWeaponActivated(AShooterWeapon* InWeapon)
 //{
 //	// unused
 //}
 //
-//void AShooterNPC::OnWeaponDeactivated(AShooterWeapon* InWeapon)
+//void ANPCCharacter::OnWeaponDeactivated(AShooterWeapon* InWeapon)
 //{
 //	// unused
 //}
 //
-//void AShooterNPC::OnSemiWeaponRefire()
+//void ANPCCharacter::OnSemiWeaponRefire()
 //{
 //	// are we still shooting?
 //	if (bIsShooting)
@@ -155,9 +152,9 @@ void AShooterNPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
 //	}
 //}
 //
-void AShooterNPC::Die()
+void ANPCCharacter::Die()
 {
-	//printScreen("AShooterNPC::Die()");
+	//printScreen("ANPCCharacter::Die()");
 	Super::Die();
 
 	// enable ragdoll physics on the third person mesh
@@ -168,13 +165,13 @@ void AShooterNPC::Die()
 	/*AZulaOnUEGameModeBase* ZulaGameMode = Cast<AZulaOnUEGameModeBase>(UGameplayStatics::GetGameMode(this));
 	if (ZulaGameMode)
 	{
-		GetWorld()->GetTimerManager().SetTimer(DeathTimer, this, &AShooterNPC::DeferredDestruction, ZulaGameMode->GetRespawnTime(), false);
+		GetWorld()->GetTimerManager().SetTimer(DeathTimer, this, &ANPCCharacter::DeferredDestruction, ZulaGameMode->GetRespawnTime(), false);
 	}*/
 }
 
-//void AShooterNPC::Respawn()
+//void ANPCCharacter::Respawn()
 //{
-//	printScreen("AShooterNPC::Respawn()");
+//	printScreen("ANPCCharacter::Respawn()");
 //	GetMesh()->SetSimulatePhysics(false);
 //	GetMesh()->SetCollisionProfileName(OriginalCollisionProfile);
 //
@@ -184,7 +181,7 @@ void AShooterNPC::Die()
 //
 //	//EnableInput(nullptr);
 //
-//	if (AShooterAIController* AIController = Cast<AShooterAIController>(Controller.Get()))
+//	if (NPCController* AIController = Cast<NPCController>(Controller.Get()))
 //	{
 //		printScreen("StateTreeAI->RestartLogic()");
 //		AIController->StateTreeAI->RestartLogic();
@@ -194,13 +191,13 @@ void AShooterNPC::Die()
 //}
 
 //TO REMOVE
-//void AShooterNPC::DeferredDestruction()
+//void ANPCCharacter::DeferredDestruction()
 //{
-//	printScreen("call AShooterNPC::DeferredDestruction()")
+//	printScreen("call ANPCCharacter::DeferredDestruction()")
 //	Destroy();
 //}
 
-void AShooterNPC::StartShooting(AActor* ActorToShoot)
+void ANPCCharacter::StartShooting(AActor* ActorToShoot)
 {
 	if (CurrentWeapon)
 	{
@@ -215,7 +212,7 @@ void AShooterNPC::StartShooting(AActor* ActorToShoot)
 	}
 }
 
-void AShooterNPC::StopShooting()
+void ANPCCharacter::StopShooting()
 {
 	// lower the flag
 	bIsShooting = false;
@@ -224,15 +221,15 @@ void AShooterNPC::StopShooting()
 	CurrentWeapon->StopFiring();
 }
 
-int32 AShooterNPC::GetZulaNPCId()
+int32 ANPCCharacter::GetZulaNPCId()
 {
-	if (AShooterAIController* AIController = Cast<AShooterAIController>(Controller.Get()))
+	if (ANPCController* AIController = Cast<ANPCController>(Controller.Get()))
 	{
 		return AIController->GetZulaNPCId();
 	}
 	else
 	{
-		UE_LOG(LogZulaOnUE, Error, TEXT("AShooterNPC::GetZulaNPCId() => no valid controller. Returning -1"));
+		UE_LOG(LogZulaOnUE, Error, TEXT("ANPCCharacter::GetZulaNPCId() => no valid controller. Returning -1"));
 		return -1;
 	}
 }

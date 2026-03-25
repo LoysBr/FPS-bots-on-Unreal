@@ -1,13 +1,13 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 
-#include "Variant_Shooter/AI/ShooterStateTreeUtility.h"
+#include "StateTreeUtility.h"
 #include "StateTreeExecutionContext.h"
-#include "ShooterNPC.h"
+#include "NPCCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "AIController.h"
 #include "Perception/AIPerceptionComponent.h"
-#include "ShooterAIController.h"
+#include "NPCController.h"
 #include "StateTreeAsyncExecutionContext.h"
 
 bool FStateTreeLineOfSightToTargetCondition::TestCondition(FStateTreeExecutionContext& Context) const

@@ -1,11 +1,9 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "ZulaOnUECharacter.h"
 #include "ShooterWeaponHolder.h"
-#include "ShooterNPC.generated.h"
+#include "NPCCharacter.generated.h"
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPawnDeathDelegate);
 class AShooterWeapon;
@@ -16,7 +14,7 @@ class AShooterWeapon;
  *  Holds and manages a weapon
  */
 UCLASS(abstract)
-class ZULAONUE_API AShooterNPC : public AZulaOnUECharacter
+class ZULAONUE_API ANPCCharacter : public AZulaOnUECharacter
 {
 	GENERATED_BODY()
 

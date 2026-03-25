@@ -385,7 +385,7 @@ void AZulaOnUECharacter::Die()
 
 void AZulaOnUECharacter::DeferredDestruction()
 {
-	//printScreen("call AShooterNPC::DeferredDestruction()")
+	//printScreen("call ANPCCharacter::DeferredDestruction()")
 	Destroy();	
 }
 

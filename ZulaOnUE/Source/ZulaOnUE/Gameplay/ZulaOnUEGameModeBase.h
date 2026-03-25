@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "ShooterNPC.h"
-#include "ShooterAIController.h"
+#include "NPCCharacter.h"
+#include "NPCController.h"
 #include "ZulaOnUEGameModeBase.generated.h"
 
 class UShooterUI;
@@ -32,7 +32,7 @@ protected:
 	float RespawnTime = 5.0f;	
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "NPC")
-	TSubclassOf<AShooterNPC> NPCClass;
+	TSubclassOf<ANPCCharacter> NPCClass;
 
 	/** Type of UI widget to spawn */
 	UPROPERTY(EditAnywhere, Category = "UI")
@@ -44,7 +44,7 @@ protected:
 	/** Map of scores by team ID */
 	TMap<uint8, int32> TeamScores;
 
-	TStaticArray<TObjectPtr<AShooterAIController>, 10> NPCControllers;
+	TStaticArray<TObjectPtr<ANPCController>, 10> NPCControllers;
 
 	int32 DesiredNumberOfNPCs = 1;
 	int32 NumberOfNPCsSpawned = 0;
@@ -69,9 +69,9 @@ protected:
 	UFUNCTION()
 	void RespawnNPC(int32 NPCId);
 
-	AShooterNPC* SpawnNewNPC();
+	ANPCCharacter* SpawnNewNPC();
 
-	void RegisterNPC(AShooterNPC* NPC, int32 NPCId);
+	void RegisterNPC(ANPCCharacter* NPC, int32 NPCId);
 
 	UFUNCTION()
 	void OnNPCDied(int32 NPCId);

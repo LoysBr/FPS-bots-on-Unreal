@@ -98,11 +98,11 @@ void AZulaOnUEGameModeBase::AddNewNPC()
 		return;
 	}
 
-	AShooterNPC* newNPC = SpawnNewNPC();
+	ANPCCharacter* newNPC = SpawnNewNPC();
 	RegisterNPC(newNPC, id);
 }
 
-void AZulaOnUEGameModeBase::RegisterNPC(AShooterNPC* NPC, int32 NPCId)
+void AZulaOnUEGameModeBase::RegisterNPC(ANPCCharacter* NPC, int32 NPCId)
 {
 	UE_LOG(LogTemp, Display, TEXT("call AZulaOnUEGameModeBase::RegisterNPC()"));
 	if (!NPC)
@@ -112,7 +112,7 @@ void AZulaOnUEGameModeBase::RegisterNPC(AShooterNPC* NPC, int32 NPCId)
 	}
 	else
 	{
-		if (AShooterAIController* AIController = Cast<AShooterAIController>(NPC->Controller.Get()))
+		if (ANPCController* AIController = Cast<ANPCController>(NPC->Controller.Get()))
 		{
 			AIController->SetZulaNPCId(NPCId);
 
@@ -125,7 +125,7 @@ void AZulaOnUEGameModeBase::RegisterNPC(AShooterNPC* NPC, int32 NPCId)
 		}
 		else
 		{
-			UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::AddNewNPC : Spawned AShooterNPC's controller class is not AShooterAIController"));
+			UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::AddNewNPC : Spawned ANPCCharacter's controller class is not NPCController"));
 		}
 	}
 }
@@ -143,7 +143,7 @@ void AZulaOnUEGameModeBase::RespawnNPC(int32 NPCId)
 
 	//normally the Character class has called Destroy, and for some reason the AIController is also destroyed... ?
 	//we can spawn a new NPC and use this ID
-	AShooterNPC* newNPC = SpawnNewNPC();
+	ANPCCharacter* newNPC = SpawnNewNPC();
 	RegisterNPC(newNPC, NPCId);
 }
 
@@ -151,7 +151,7 @@ void AZulaOnUEGameModeBase::RespawnNPC(int32 NPCId)
 /// Spawn Actor
 /// </summary>
 /// <returns>The created Actor, or NULL</returns>
-AShooterNPC* AZulaOnUEGameModeBase::SpawnNewNPC()
+ANPCCharacter* AZulaOnUEGameModeBase::SpawnNewNPC()
 {
 	UE_LOG(LogTemp, Display, TEXT("call AZulaOnUEGameModeBase::SpawnNewNPC()"));
 
@@ -168,7 +168,7 @@ AShooterNPC* AZulaOnUEGameModeBase::SpawnNewNPC()
 	FRotator SpawnRotation;
 	GetRandomStartPointData(SpawnLocation, SpawnRotation);
 
-	AShooterNPC* SpawnedNPC = GetWorld()->SpawnActor<AShooterNPC>(NPCClass, SpawnLocation, SpawnRotation, SpawnParams);
+	ANPCCharacter* SpawnedNPC = GetWorld()->SpawnActor<ANPCCharacter>(NPCClass, SpawnLocation, SpawnRotation, SpawnParams);
 
 	if (IsValid(SpawnedNPC))
 	{
@@ -176,7 +176,7 @@ AShooterNPC* AZulaOnUEGameModeBase::SpawnNewNPC()
 	}
 	else
 	{
-		UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::SpawnNewNPC : Error while spawning actor AShooterNPC"));
+		UE_LOG(LogZulaOnUE, Error, TEXT("AZulaOnUEGameModeBase::SpawnNewNPC : Error while spawning actor ANPCCharacter"));
 		return NULL;
 	}
 }
@@ -209,7 +209,7 @@ int32 AZulaOnUEGameModeBase::GetNewZulaNPCId()
 
 	/*int32 ret = 0;
 
-	for (TObjectPtr<AShooterAIController> NPCController : NPCControllers)
+	for (TObjectPtr<NPCController> NPCController : NPCControllers)
 	{
 		if (NPCController == NULL)
 		{
@@ -242,7 +242,7 @@ float AZulaOnUEGameModeBase::GetRespawnTime()
 void AZulaOnUEGameModeBase::ClearNPCs()
 {
 	UE_LOG(LogTemp, Display, TEXT("AZulaOnUEGameModeBase::ClearNPCs"));
-	for (TObjectPtr<AShooterAIController> NPCController : NPCControllers)
+	for (TObjectPtr<ANPCController> NPCController : NPCControllers)
 	{
 		if (NPCController == NULL)
 		{

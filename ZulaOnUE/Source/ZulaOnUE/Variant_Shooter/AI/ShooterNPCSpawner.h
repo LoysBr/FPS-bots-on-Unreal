@@ -3,12 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "NPCCharacter.h"
 #include "GameFramework/Actor.h"
 #include "ShooterNPCSpawner.generated.h"
 
 class UCapsuleComponent;
 class UArrowComponent;
-class AShooterNPC;
+class ANPCCharacter;
 
 /**
  *  A basic Actor in charge of spawning Shooter NPCs and monitoring their deaths.
@@ -29,7 +30,7 @@ protected:
 
 	/** Type of NPC to spawn */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="NPC Spawner")
-	TSubclassOf<AShooterNPC> NPCClass;
+	TSubclassOf<ANPCCharacter> NPCClass;
 
 	/** Time to wait before spawning the first NPC on game start */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="NPC Spawner", meta = (ClampMin = 0, ClampMax = 10))

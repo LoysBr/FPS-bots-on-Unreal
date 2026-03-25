@@ -25,11 +25,15 @@ public class ZulaOnUE : ModuleRules
 
 		PublicIncludePaths.AddRange(new string[] {
 			"ZulaOnUE",
-			"ZulaOnUE/Variant_Horror",
+            "ZulaOnUE/Gameplay",
+            "ZulaOnUE/Gameplay/Character",
+            "ZulaOnUE/Gameplay/NPC",
+            "ZulaOnUE/Gameplay/Weapons",
+            "ZulaOnUE/Gameplay/UI",
+            "ZulaOnUE/Variant_Horror",
 			"ZulaOnUE/Variant_Horror/UI",
 			"ZulaOnUE/Variant_Shooter",
 			"ZulaOnUE/Variant_Shooter/AI",
-			"ZulaOnUE/Variant_Shooter/UI",
 			"ZulaOnUE/Variant_Shooter/Weapons"
 		});
 
