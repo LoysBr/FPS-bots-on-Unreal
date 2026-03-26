@@ -50,6 +50,8 @@ void AShooterWeapon::BeginPlay()
 
 	// attach the meshes to the owner
 	WeaponOwner->AttachWeaponMeshes(this);
+
+	IsFiring = IsReloading = false;
 }
 
 void AShooterWeapon::EndPlay(EEndPlayReason::Type EndPlayReason)
@@ -78,7 +80,7 @@ void AShooterWeapon::ActivateWeapon()
 void AShooterWeapon::DeactivateWeapon()
 {
 	// ensure we're no longer firing this weapon while deactivated
-	StopFiring();
+	StopFireAction();
 
 	// hide the weapon
 	SetActorHiddenInGame(true);
@@ -87,10 +89,16 @@ void AShooterWeapon::DeactivateWeapon()
 	WeaponOwner->OnWeaponDeactivated(this);
 }
 
-void AShooterWeapon::StartFiring()
+void AShooterWeapon::StartFireAction()
 {
+	if (!CanShootBullet())
+	{
+		printScreen("StartFireAction but Cannot Shoot Bullet => returning");
+		return;
+	}
+
 	// raise the firing flag
-	bIsFiring = true;
+	IsFiring = true;
 
 	// check how much time has passed since we last shot
 	// this may be under the refire rate if the weapon shoots slow enough and the player is spamming the trigger
@@ -100,36 +108,62 @@ void AShooterWeapon::StartFiring()
 	{
 		// fire the weapon right away
 		Fire();
-
-	} else {
-
+	} 
+	else
+	{
 		// if we're full auto, schedule the next shot
-		if (bFullAuto)
+		if (IsAutomaticWeapon)
 		{
 			GetWorld()->GetTimerManager().SetTimer(RefireTimer, this, &AShooterWeapon::Fire, TimeSinceLastShot, false);
 		}
 	}
 }
 
-void AShooterWeapon::StopFiring()
+void AShooterWeapon::StopFireAction()
 {
 	// lower the firing flag
-	bIsFiring = false;
+	IsFiring = false;
 
 	// clear the refire timer
 	GetWorld()->GetTimerManager().ClearTimer(RefireTimer);
 }
 
+bool AShooterWeapon::CanShootBullet()
+{
+	return CurrentBullets > 0 && !IsReloading;
+}
+
+//void AShooterWeapon::Reload()
+//{
+//	IsReloading = true;
+//}
+
+//void AShooterWeapon::OnReloaded()
+//{
+//	IsReloading = false;
+//	CurrentBullets = MagazineSize;
+//}
+
 void AShooterWeapon::Fire()
 {
 	// ensure the player still wants to fire. They may have let go of the trigger
-	if (!bIsFiring)
+	if (!IsFiring)
 	{
 		return;
 	}
 	
 	// fire a projectile at the target
 	FireProjectile(WeaponOwner->GetWeaponTargetLocation());
+
+	// consume bullets
+	--CurrentBullets;
+
+	CurrentAmmoUpdated.ExecuteIfBound(CurrentBullets);
+
+	if (CurrentBullets <= 0)
+	{
+		MagazineBecameEmpty.Broadcast();
+	}
 
 	// update the time of our last shot
 	TimeOfLastShot = GetWorld()->GetTimeSeconds();
@@ -138,7 +172,7 @@ void AShooterWeapon::Fire()
 	MakeNoise(ShotLoudness, PawnOwner, PawnOwner->GetActorLocation(), ShotNoiseRange, ShotNoiseTag);
 
 	// are we full auto?
-	if (bFullAuto)
+	if (IsAutomaticWeapon)
 	{
 		// schedule the next shot
 		GetWorld()->GetTimerManager().SetTimer(RefireTimer, this, &AShooterWeapon::Fire, RefireRate, false);
@@ -176,18 +210,15 @@ void AShooterWeapon::FireProjectile(const FVector& TargetLocation)
 	// add recoil
 	WeaponOwner->AddWeaponRecoil(FiringRecoil);
 
-	// consume bullets
-	--CurrentBullets;
+	
 
-	// if the clip is depleted, reload it
-	if (CurrentBullets <= 0)
-	{
-		printScreen("raise event Magazine is Empty!");
-		CurrentBullets = MagazineSize;
-	}
-
-	// update the weapon HUD
-	WeaponOwner->UpdateWeaponHUD(CurrentBullets, MagazineSize);
+	//RELOAD LOGIC IN BLUEPRINT
+	//// if the clip is depleted, reload it
+	//if (CurrentBullets <= 0)
+	//{
+	//	printScreen("raise event Magazine is Empty!");
+	//	//Reload();
+	//}
 }
 
 FTransform AShooterWeapon::CalculateProjectileSpawnTransform(const FVector& TargetLocation) const

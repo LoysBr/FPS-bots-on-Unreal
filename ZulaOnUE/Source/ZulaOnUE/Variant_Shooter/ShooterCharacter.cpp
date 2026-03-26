@@ -50,11 +50,11 @@ AShooterCharacter::AShooterCharacter()
 //	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 //	{
 //		// Firing
-//		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &AShooterCharacter::DoStartFiring);
-//		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Completed, this, &AShooterCharacter::DoStopFiring);
+//		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &AShooterCharacter::DoStartFireAction);
+//		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Completed, this, &AShooterCharacter::DoStopFireAction);
 //
 //		// Switch weapon
-//		EnhancedInputComponent->BindAction(SwitchWeaponAction, ETriggerEvent::Triggered, this, &AShooterCharacter::DoSwitchWeapon);
+//		EnhancedInputComponent->BindAction(SwitchWeaponAction, ETriggerEvent::Triggered, this, &AShooterCharacter::DoSwitchWeaponAction);
 //	}
 //
 //}
@@ -118,25 +118,25 @@ AShooterCharacter::AShooterCharacter()
 //	}
 //}
 //
-//void AShooterCharacter::DoStartFiring()
+//void AShooterCharacter::DoStartFireAction()
 //{
 //	// fire the current weapon
 //	if (CurrentWeapon && !IsDead())
 //	{
-//		CurrentWeapon->StartFiring();
+//		CurrentWeapon->StartFireAction();
 //	}
 //}
 //
-//void AShooterCharacter::DoStopFiring()
+//void AShooterCharacter::DoStopFireAction()
 //{
 //	// stop firing the current weapon
 //	if (CurrentWeapon && !IsDead())
 //	{
-//		CurrentWeapon->StopFiring();
+//		CurrentWeapon->StopFireAction();
 //	}
 //}
 //
-//void AShooterCharacter::DoSwitchWeapon()
+//void AShooterCharacter::DoSwitchWeaponAction()
 //{
 //	// ensure we have at least two weapons two switch between
 //	if (OwnedWeapons.Num() > 1 && !IsDead())

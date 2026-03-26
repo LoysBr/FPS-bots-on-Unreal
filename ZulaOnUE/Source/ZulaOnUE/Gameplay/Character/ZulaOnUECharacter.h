@@ -23,6 +23,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FBulletCountUpdatedDelegate, int32, MagazineSize, int32, Bullets);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDamagedDelegate, float, LifePercent);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FZulaCharacterDeathDelegate, int32, ZulaId);
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FWeaponMagazineBecameEmpty);
 
 
 UCLASS(abstract)
@@ -126,6 +127,7 @@ public:
 	FBulletCountUpdatedDelegate OnBulletCountUpdated;
 	FDamagedDelegate OnDamaged;
 	FZulaCharacterDeathDelegate OnCharacterDied;
+	//FWeaponMagazineBecameEmpty WeaponMagazineBecameEmpty;
 
 	/** Returns the first person mesh **/
 	USkeletalMeshComponent* GetFirstPersonMesh() const { return FirstPersonMesh; }
@@ -171,18 +173,9 @@ public:
 	//~End IShooterWeaponHolder interface
 
 protected:
-
-	/** Gameplay initialization */
-	virtual void BeginPlay() override;
-
-	/** Gameplay cleanup */
-	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
-
-	/** Called from Input Actions for movement input */
-	void MoveInput(const FInputActionValue& Value);
-
-	/** Called from Input Actions for looking input */
-	void LookInput(const FInputActionValue& Value);
+	///** Handles aim inputs from either controls or UI interfaces */
+	//UFUNCTION(BlueprintCallable, Category = "Input")
+	//virtual void DoAim(float Yaw, float Pitch);
 
 	/** Handles aim inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category="Input")
@@ -202,15 +195,19 @@ protected:
 
 	/** Handles start firing input */
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	void DoStartFiring();
+	void DoStartFireAction();
 
 	/** Handles stop firing input */
 	UFUNCTION(BlueprintCallable, Category="Input")
-	void DoStopFiring();
+	void DoStopFireAction();
 
 	/** Handles switch weapon input */
 	UFUNCTION(BlueprintCallable, Category="Input")
-	void DoSwitchWeapon();
+	void DoSwitchWeaponAction();
+
+	/** Called to allow Blueprint code to react to this character's death */
+	UFUNCTION(BlueprintImplementableEvent, Category = "Shooter", meta = (DisplayName = "On Death"))
+	void BP_OnDeath();
 
 	/** Set up input action bindings */
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
@@ -221,12 +218,24 @@ protected:
 	/** Called when this character's HP is depleted */
 	virtual void Die();
 
-	/** Called to allow Blueprint code to react to this character's death */
-	UFUNCTION(BlueprintImplementableEvent, Category = "Shooter", meta = (DisplayName = "On Death"))
-	void BP_OnDeath();
+	/** Gameplay initialization */
+	virtual void BeginPlay() override;
+
+	/** Gameplay cleanup */
+	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
+
+	/** Called from Input Actions for movement input */
+	void MoveInput(const FInputActionValue& Value);
+
+	/** Called from Input Actions for looking input */
+	void LookInput(const FInputActionValue& Value);
 
 	/** Called from the respawn timer to destroy this character and force the PC to respawn */
 	void DeferredDestruction();
+
+	void OnWeaponCurrentAmmoUpdated(int32 currentAmmo);
+
+	void OnWeaponMagazineBecameEmpty();
 
 public:
 	virtual int32 GetZulaNPCId() PURE_VIRTUAL(GetZulaNPCId, return -1;);

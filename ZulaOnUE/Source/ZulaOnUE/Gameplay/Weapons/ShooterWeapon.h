@@ -12,6 +12,10 @@ class USkeletalMeshComponent;
 class UAnimMontage;
 class UAnimInstance;
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FMagazineBecameEmptyDelegate);
+DECLARE_DELEGATE_OneParam(FCurrentAmmoUpdatedDelegate, int32); //current ammo
+
 /**
  *  Base class for a simple first person shooter weapon
  *  Provides both first person and third person perspective meshes
@@ -32,10 +36,6 @@ class ZULAONUE_API AShooterWeapon : public AActor
 	USkeletalMeshComponent* ThirdPersonMesh;
 
 protected:
-
-	/** Cast pointer to the weapon owner */
-	IShooterWeaponHolder* WeaponOwner;
-
 	/** Type of projectiles this weapon will shoot */
 	UPROPERTY(EditAnywhere, Category="Ammo")
 	TSubclassOf<AShooterProjectile> ProjectileClass;
@@ -45,7 +45,23 @@ protected:
 	int32 MagazineSize = 10;
 
 	/** Number of bullets in the current magazine */
+	UPROPERTY(BlueprintReadWrite)
 	int32 CurrentBullets = 0;
+
+	/** Number of bullets in the current magazine */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ammo", meta = (ClampMin = 0, ClampMax = 5, Units = "s"))
+	float ReloadDuration = 3;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Ammo")
+	bool IsReloading = false;
+
+	/** If true, this weapon will automatically fire at the refire rate */
+	UPROPERTY(EditAnywhere, Category = "Refire")
+	bool IsAutomaticWeapon = false;
+
+	/** Time between shots for this weapon. Affects both full auto and semi auto modes */
+	UPROPERTY(EditAnywhere, Category = "Refire", meta = (ClampMin = 0, ClampMax = 5, Units = "s"))
+	float RefireRate = 0.5f;
 	
 	/** Animation montage to play when firing this weapon */
 	UPROPERTY(EditAnywhere, Category="Animation")
@@ -75,26 +91,6 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Aim", meta = (ClampMin = 0, ClampMax = 1000, Units = "cm"))
 	float MuzzleOffset = 10.0f;
 
-	/** If true, this weapon will automatically fire at the refire rate */
-	UPROPERTY(EditAnywhere, Category="Refire")
-	bool bFullAuto = false;
-
-	/** Time between shots for this weapon. Affects both full auto and semi auto modes */
-	UPROPERTY(EditAnywhere, Category="Refire", meta = (ClampMin = 0, ClampMax = 5, Units = "s"))
-	float RefireRate = 0.5f;
-
-	/** Game time of last shot fired, used to enforce refire rate on semi auto */
-	float TimeOfLastShot = 0.0f;
-
-	/** If true, the weapon is currently firing */
-	bool bIsFiring = false;
-
-	/** Timer to handle full auto refiring */
-	FTimerHandle RefireTimer;
-
-	/** Cast pawn pointer to the owner for AI perception system interactions */
-	TObjectPtr<APawn> PawnOwner;
-
 	/** Loudness of the shot for AI perception system interactions */
 	UPROPERTY(EditAnywhere, Category="Perception", meta = (ClampMin = 0, ClampMax = 100))
 	float ShotLoudness = 1.0f;
@@ -107,10 +103,30 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Perception")
 	FName ShotNoiseTag = FName("Shot");
 
+	/** Cast pointer to the weapon owner */
+	IShooterWeaponHolder* WeaponOwner;
+
+	/** Game time of last shot fired, used to enforce refire rate on semi auto */
+	float TimeOfLastShot = 0.0f;
+
+	/** If true, the weapon is currently firing */
+	bool IsFiring = false;
+
+	/** Timer to handle full auto refiring */
+	FTimerHandle RefireTimer;
+
+	/** Cast pawn pointer to the owner for AI perception system interactions */
+	TObjectPtr<APawn> PawnOwner;
+
 public:	
 
 	/** Constructor */
 	AShooterWeapon();
+
+	UPROPERTY(BlueprintAssignable)
+	FMagazineBecameEmptyDelegate MagazineBecameEmpty;
+
+	FCurrentAmmoUpdatedDelegate CurrentAmmoUpdated;
 
 protected:
 	
@@ -120,27 +136,9 @@ protected:
 	/** Gameplay Cleanup */
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
-protected:
-
 	/** Called when the weapon's owner is destroyed */
 	UFUNCTION()
 	void OnOwnerDestroyed(AActor* DestroyedActor);
-
-public:
-
-	/** Activates this weapon and gets it ready to fire */
-	void ActivateWeapon();
-
-	/** Deactivates this weapon */
-	void DeactivateWeapon();
-
-	/** Start firing this weapon */
-	void StartFiring();
-
-	/** Stop firing this weapon */
-	void StopFiring();
-
-protected:
 
 	/** Fire the weapon */
 	virtual void Fire();
@@ -154,7 +152,23 @@ protected:
 	/** Calculates the spawn transform for projectiles shot by this weapon */
 	FTransform CalculateProjectileSpawnTransform(const FVector& TargetLocation) const;
 
+	bool CanShootBullet();
+
+	//void Reload();
+
 public:
+
+	/** Activates this weapon and gets it ready to fire */
+	void ActivateWeapon();
+
+	/** Deactivates this weapon */
+	void DeactivateWeapon();
+
+	/** Start firing this weapon */
+	void StartFireAction();
+
+	/** Stop firing this weapon */
+	void StopFireAction();
 
 	/** Returns the first person mesh */
 	UFUNCTION(BlueprintPure, Category="Weapon")

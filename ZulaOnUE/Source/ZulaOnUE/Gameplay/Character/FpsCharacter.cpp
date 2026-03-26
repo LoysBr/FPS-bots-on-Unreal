@@ -14,11 +14,11 @@ void AFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		// Firing
-		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &AFpsCharacter::DoStartFiring);
-		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Completed, this, &AFpsCharacter::DoStopFiring);
+		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &AFpsCharacter::DoStartFireAction);
+		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Completed, this, &AFpsCharacter::DoStopFireAction);
 
 		// Switch weapon
-		EnhancedInputComponent->BindAction(SwitchWeaponAction, ETriggerEvent::Triggered, this, &AFpsCharacter::DoSwitchWeapon);
+		EnhancedInputComponent->BindAction(SwitchWeaponAction, ETriggerEvent::Triggered, this, &AFpsCharacter::DoSwitchWeaponAction);
 	}
 
 }

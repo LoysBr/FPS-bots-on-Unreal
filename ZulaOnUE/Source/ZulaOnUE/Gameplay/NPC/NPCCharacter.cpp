@@ -148,7 +148,7 @@ void ANPCCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 //	if (bIsShooting)
 //	{
 //		// fire the weapon
-//		//CurrentWeapon->StartFiring();
+//		//CurrentWeapon->StartFireAction();
 //	}
 //}
 //
@@ -208,7 +208,7 @@ void ANPCCharacter::StartShooting(AActor* ActorToShoot)
 		bIsShooting = true;
 
 		// signal the weapon
-		CurrentWeapon->StartFiring();
+		CurrentWeapon->StartFireAction();
 	}
 }
 
@@ -218,7 +218,7 @@ void ANPCCharacter::StopShooting()
 	bIsShooting = false;
 
 	// signal the weapon
-	CurrentWeapon->StopFiring();
+	CurrentWeapon->StopFireAction();
 }
 
 int32 ANPCCharacter::GetZulaNPCId()

@@ -179,25 +179,23 @@ float AZulaOnUECharacter::TakeDamage(float Damage, struct FDamageEvent const& Da
 	return Damage;
 }
 
-void AZulaOnUECharacter::DoStartFiring()
+void AZulaOnUECharacter::DoStartFireAction()
 {
-	// fire the current weapon
 	if (CurrentWeapon && !IsDead())
 	{
-		CurrentWeapon->StartFiring();
+		CurrentWeapon->StartFireAction();
 	}
 }
 
-void AZulaOnUECharacter::DoStopFiring()
+void AZulaOnUECharacter::DoStopFireAction()
 {
-	// stop firing the current weapon
 	if (CurrentWeapon && !IsDead())
 	{
-		CurrentWeapon->StopFiring();
+		CurrentWeapon->StopFireAction();
 	}
 }
 
-void AZulaOnUECharacter::DoSwitchWeapon()
+void AZulaOnUECharacter::DoSwitchWeaponAction()
 {
 	// ensure we have at least two weapons two switch between
 	if (OwnedWeapons.Num() > 1 && !IsDead())
@@ -310,6 +308,9 @@ void AZulaOnUECharacter::AddWeaponClass(const TSubclassOf<AShooterWeapon>& Weapo
 
 void AZulaOnUECharacter::OnWeaponActivated(AShooterWeapon* Weapon)
 {
+	Weapon->CurrentAmmoUpdated.BindUObject(this, &AZulaOnUECharacter::OnWeaponCurrentAmmoUpdated);
+	//Weapon->MagazineBecameEmpty.AddDynamic(this, &AZulaOnUECharacter::OnWeaponMagazineBecameEmpty);
+
 	// update the bullet counter
 	OnBulletCountUpdated.Broadcast(Weapon->GetMagazineSize(), Weapon->GetBulletCount());
 
@@ -320,12 +321,25 @@ void AZulaOnUECharacter::OnWeaponActivated(AShooterWeapon* Weapon)
 
 void AZulaOnUECharacter::OnWeaponDeactivated(AShooterWeapon* Weapon)
 {
-	// unused
+	Weapon->CurrentAmmoUpdated.Unbind();
+	//Weapon->MagazineBecameEmpty.RemoveDynamic(this, &AZulaOnUECharacter::OnWeaponMagazineBecameEmpty);
 }
 
 void AZulaOnUECharacter::OnSemiWeaponRefire()
 {
 	// unused
+}
+
+void AZulaOnUECharacter::OnWeaponCurrentAmmoUpdated(int32 currentAmmo)
+{
+	printScreen("call AZulaOnUECharacter::OnWeaponCurrentAmmoUpdated()");
+	OnBulletCountUpdated.Broadcast(CurrentWeapon->GetMagazineSize(), currentAmmo); //could also use directly CurrentWeapon member
+}
+
+void AZulaOnUECharacter::OnWeaponMagazineBecameEmpty()
+{
+	printScreen("call AZulaOnUECharacter::OnWeaponMagazineBecameEmpty()");
+	//WeaponMagazineBecameEmpty.Broadcast();
 }
 
 AShooterWeapon* AZulaOnUECharacter::FindWeaponOfType(TSubclassOf<AShooterWeapon> WeaponClass) const

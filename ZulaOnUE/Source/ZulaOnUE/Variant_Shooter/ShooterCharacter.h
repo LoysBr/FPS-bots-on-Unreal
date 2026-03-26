@@ -121,15 +121,15 @@ public:
 
 	///** Handles start firing input */
 	//UFUNCTION(BlueprintCallable, Category="Input")
-	//void DoStartFiring();
+	//void DoStartFireAction();
 
 	///** Handles stop firing input */
 	//UFUNCTION(BlueprintCallable, Category="Input")
-	//void DoStopFiring();
+	//void DoStopFireAction();
 
 	///** Handles switch weapon input */
 	//UFUNCTION(BlueprintCallable, Category="Input")
-	//void DoSwitchWeapon();
+	//void DoSwitchWeaponAction();
 
 public:
 
