@@ -15,6 +15,7 @@ class UAnimInstance;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FMagazineBecameEmptyDelegate);
 DECLARE_DELEGATE_OneParam(FCurrentAmmoUpdatedDelegate, int32); //current ammo
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FReloadedDelegate, int32, MagazineSize);
 
 /**
  *  Base class for a simple first person shooter weapon
@@ -41,12 +42,12 @@ protected:
 	TSubclassOf<AShooterProjectile> ProjectileClass;
 
 	/** Number of bullets in a magazine */
-	UPROPERTY(EditAnywhere, Category="Ammo", meta = (ClampMin = 0, ClampMax = 100))
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="Ammo", meta = (ClampMin = 0, ClampMax = 100))
 	int32 MagazineSize = 10;
 
 	/** Number of bullets in the current magazine */
 	UPROPERTY(BlueprintReadWrite)
-	int32 CurrentBullets = 0;
+	int32 CurrentBulletCount = 0;
 
 	/** Number of bullets in the current magazine */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ammo", meta = (ClampMin = 0, ClampMax = 5, Units = "s"))
@@ -128,7 +129,14 @@ public:
 
 	FCurrentAmmoUpdatedDelegate CurrentAmmoUpdated;
 
+	/*UPROPERTY(BlueprintCallable)
+	FReloadedDelegate MagazineReloaded; */
+	 
 protected:
+
+	/** Simply to test the other direction, from BP to CPP */
+	UFUNCTION(BlueprintCallable)
+	void UpdateCurrentAmmo(int currentAmmo);
 	
 	/** Gameplay initialization */
 	virtual void BeginPlay() override;
@@ -188,5 +196,5 @@ public:
 	int32 GetMagazineSize() const { return MagazineSize; };
 
 	/** Returns the current bullet count */
-	int32 GetBulletCount() const { return CurrentBullets; }
+	int32 GetBulletCount() const { return CurrentBulletCount; }
 };

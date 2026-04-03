@@ -249,11 +249,6 @@ void AZulaOnUECharacter::AddWeaponRecoil(float Recoil)
 	AddControllerPitchInput(Recoil);
 }
 
-void AZulaOnUECharacter::UpdateWeaponHUD(int32 CurrentAmmo, int32 MagazineSize)
-{
-	OnBulletCountUpdated.Broadcast(MagazineSize, CurrentAmmo);
-}
-
 //ONLY FOR FPS CHARACTER
 FVector AZulaOnUECharacter::GetWeaponTargetLocation()
 {
@@ -309,10 +304,10 @@ void AZulaOnUECharacter::AddWeaponClass(const TSubclassOf<AShooterWeapon>& Weapo
 void AZulaOnUECharacter::OnWeaponActivated(AShooterWeapon* Weapon)
 {
 	Weapon->CurrentAmmoUpdated.BindUObject(this, &AZulaOnUECharacter::OnWeaponCurrentAmmoUpdated);
-	//Weapon->MagazineBecameEmpty.AddDynamic(this, &AZulaOnUECharacter::OnWeaponMagazineBecameEmpty);
+	//Weapon->MagazineReloaded.AddDynamic(this, &AZulaOnUECharacter::OnWeaponMagazineReloaded);
 
 	// update the bullet counter
-	OnBulletCountUpdated.Broadcast(Weapon->GetMagazineSize(), Weapon->GetBulletCount());
+	BulletCountUpdated.Broadcast(Weapon->GetMagazineSize(), Weapon->GetBulletCount());
 
 	// set the character mesh AnimInstances
 	GetFirstPersonMesh()->SetAnimInstanceClass(Weapon->GetFirstPersonAnimInstanceClass());
@@ -322,7 +317,7 @@ void AZulaOnUECharacter::OnWeaponActivated(AShooterWeapon* Weapon)
 void AZulaOnUECharacter::OnWeaponDeactivated(AShooterWeapon* Weapon)
 {
 	Weapon->CurrentAmmoUpdated.Unbind();
-	//Weapon->MagazineBecameEmpty.RemoveDynamic(this, &AZulaOnUECharacter::OnWeaponMagazineBecameEmpty);
+	//Weapon->MagazineReloaded.RemoveDynamic(this, &AZulaOnUECharacter::OnWeaponMagazineReloaded);
 }
 
 void AZulaOnUECharacter::OnSemiWeaponRefire()
@@ -333,13 +328,19 @@ void AZulaOnUECharacter::OnSemiWeaponRefire()
 void AZulaOnUECharacter::OnWeaponCurrentAmmoUpdated(int32 currentAmmo)
 {
 	printScreen("call AZulaOnUECharacter::OnWeaponCurrentAmmoUpdated()");
-	OnBulletCountUpdated.Broadcast(CurrentWeapon->GetMagazineSize(), currentAmmo); //could also use directly CurrentWeapon member
+	BulletCountUpdated.Broadcast(CurrentWeapon->GetMagazineSize(), currentAmmo); //could also use directly CurrentWeapon member
 }
 
 void AZulaOnUECharacter::OnWeaponMagazineBecameEmpty()
 {
 	printScreen("call AZulaOnUECharacter::OnWeaponMagazineBecameEmpty()");
 	//WeaponMagazineBecameEmpty.Broadcast();
+}
+
+void AZulaOnUECharacter::OnWeaponMagazineReloaded(int32 magSize)
+{
+	printScreen("call AZulaOnUECharacter::OnWeaponMagazineBecameEmpty()");
+	//BP_OnMagazineReloaded(magSize);
 }
 
 AShooterWeapon* AZulaOnUECharacter::FindWeaponOfType(TSubclassOf<AShooterWeapon> WeaponClass) const
@@ -388,7 +389,7 @@ void AZulaOnUECharacter::Die()
 	DisableInput(nullptr);
 
 	// reset the bullet counter UI
-	OnBulletCountUpdated.Broadcast(0, 0);
+	BulletCountUpdated.Broadcast(0, 0);
 
 	// call the BP handler
 	BP_OnDeath();	

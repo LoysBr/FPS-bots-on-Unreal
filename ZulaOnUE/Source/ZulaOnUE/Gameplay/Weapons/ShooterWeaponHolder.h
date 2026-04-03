@@ -36,7 +36,7 @@ public:
 	virtual void AddWeaponRecoil(float Recoil) = 0;
 
 	/** Updates the weapon's HUD with the current ammo count */
-	virtual void UpdateWeaponHUD(int32 CurrentAmmo, int32 MagazineSize) = 0;
+	//virtual void UpdateWeaponHUD(int32 CurrentAmmo, int32 MagazineSize) = 0;
 
 	/** Calculates and returns the aim location for the weapon */
 	virtual FVector GetWeaponTargetLocation() = 0;

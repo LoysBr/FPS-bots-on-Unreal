@@ -7,7 +7,6 @@
 #include "InputMappingContext.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerStart.h"
-#include "ShooterCharacter.h"
 #include "ShooterBulletCounterUI.h"
 #include "ZulaOnUE.h"
 #include "Widgets/Input/SVirtualJoystick.h"
@@ -93,7 +92,7 @@ void AShooterPlayerController::OnPossess(APawn* InPawn)
 		FpsCharacter->Tags.Add(PlayerPawnTag);
 
 		// subscribe to the pawn's delegates
-		FpsCharacter->OnBulletCountUpdated.AddDynamic(this, &AShooterPlayerController::OnBulletCountUpdated);
+		FpsCharacter->BulletCountUpdated.AddDynamic(this, &AShooterPlayerController::BulletCountUpdated);
 		FpsCharacter->OnDamaged.AddDynamic(this, &AShooterPlayerController::OnPawnDamaged);
 
 		// force update the life bar
@@ -129,7 +128,7 @@ void AShooterPlayerController::OnPawnDestroyed(AActor* DestroyedActor)
 	}
 }
 
-void AShooterPlayerController::OnBulletCountUpdated(int32 MagazineSize, int32 Bullets)
+void AShooterPlayerController::BulletCountUpdated(int32 MagazineSize, int32 Bullets)
 {
 	// update the UI
 	if (BulletCounterUI)

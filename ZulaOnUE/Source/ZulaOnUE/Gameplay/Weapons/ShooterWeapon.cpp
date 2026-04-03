@@ -46,7 +46,7 @@ void AShooterWeapon::BeginPlay()
 	PawnOwner = Cast<APawn>(GetOwner());
 
 	// fill the first ammo clip
-	CurrentBullets = MagazineSize;
+	CurrentBulletCount = MagazineSize;
 
 	// attach the meshes to the owner
 	WeaponOwner->AttachWeaponMeshes(this);
@@ -130,19 +130,8 @@ void AShooterWeapon::StopFireAction()
 
 bool AShooterWeapon::CanShootBullet()
 {
-	return CurrentBullets > 0 && !IsReloading;
+	return CurrentBulletCount > 0 && !IsReloading;
 }
-
-//void AShooterWeapon::Reload()
-//{
-//	IsReloading = true;
-//}
-
-//void AShooterWeapon::OnReloaded()
-//{
-//	IsReloading = false;
-//	CurrentBullets = MagazineSize;
-//}
 
 void AShooterWeapon::Fire()
 {
@@ -156,11 +145,11 @@ void AShooterWeapon::Fire()
 	FireProjectile(WeaponOwner->GetWeaponTargetLocation());
 
 	// consume bullets
-	--CurrentBullets;
+	--CurrentBulletCount;
 
-	CurrentAmmoUpdated.ExecuteIfBound(CurrentBullets);
+	CurrentAmmoUpdated.ExecuteIfBound(CurrentBulletCount);
 
-	if (CurrentBullets <= 0)
+	if (CurrentBulletCount <= 0)
 	{
 		MagazineBecameEmpty.Broadcast();
 	}
@@ -182,6 +171,12 @@ void AShooterWeapon::Fire()
 		// for semi-auto weapons, schedule the cooldown notification
 		GetWorld()->GetTimerManager().SetTimer(RefireTimer, this, &AShooterWeapon::FireCooldownExpired, RefireRate, false);
 	}
+}
+
+//called from BP to impact CPP
+void AShooterWeapon::UpdateCurrentAmmo(int currentAmmo)
+{
+	CurrentAmmoUpdated.ExecuteIfBound(CurrentBulletCount);
 }
 
 void AShooterWeapon::FireCooldownExpired()
@@ -214,7 +209,7 @@ void AShooterWeapon::FireProjectile(const FVector& TargetLocation)
 
 	//RELOAD LOGIC IN BLUEPRINT
 	//// if the clip is depleted, reload it
-	//if (CurrentBullets <= 0)
+	//if (CurrentBulletCount <= 0)
 	//{
 	//	printScreen("raise event Magazine is Empty!");
 	//	//Reload();

@@ -124,7 +124,8 @@ protected:
 public:
 	AZulaOnUECharacter();
 
-	FBulletCountUpdatedDelegate OnBulletCountUpdated;
+	UPROPERTY(BlueprintCallable)
+	FBulletCountUpdatedDelegate BulletCountUpdated;
 	FDamagedDelegate OnDamaged;
 	FZulaCharacterDeathDelegate OnCharacterDied;
 	//FWeaponMagazineBecameEmpty WeaponMagazineBecameEmpty;
@@ -153,7 +154,10 @@ public:
 	virtual void AddWeaponRecoil(float Recoil) override;
 
 	/** Updates the weapon's HUD with the current ammo count */
-	virtual void UpdateWeaponHUD(int32 CurrentAmmo, int32 MagazineSize) override;
+	//virtual void UpdateWeaponHUD(int32 CurrentAmmo, int32 MagazineSize) override;
+
+	//UFUNCTION(BlueprintImplementableEvent)
+	//int32 OnWeaponReloaded();
 
 	/** Calculates and returns the aim location for the weapon */
 	virtual FVector GetWeaponTargetLocation() override;
@@ -208,6 +212,11 @@ protected:
 	/** Called to allow Blueprint code to react to this character's death */
 	UFUNCTION(BlueprintImplementableEvent, Category = "Shooter", meta = (DisplayName = "On Death"))
 	void BP_OnDeath();
+
+	//UFUNCTION(BlueprintImplementableEvent)
+	//void BP_OnMagazineReloaded(int32 MagazineSize);
+
+	void OnWeaponMagazineReloaded(int32 magSize);
 
 	/** Set up input action bindings */
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
