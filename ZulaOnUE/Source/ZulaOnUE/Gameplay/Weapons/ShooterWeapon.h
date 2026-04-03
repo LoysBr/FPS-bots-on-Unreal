@@ -15,7 +15,6 @@ class UAnimInstance;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FMagazineBecameEmptyDelegate);
 DECLARE_DELEGATE_OneParam(FCurrentAmmoUpdatedDelegate, int32); //current ammo
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FReloadedDelegate, int32, MagazineSize);
 
 /**
  *  Base class for a simple first person shooter weapon
@@ -119,25 +118,60 @@ protected:
 	/** Cast pawn pointer to the owner for AI perception system interactions */
 	TObjectPtr<APawn> PawnOwner;
 
-public:	
-
-	/** Constructor */
-	AShooterWeapon();
-
+	
+	//BLUEPRINT FUNCTIONS
+public:
 	UPROPERTY(BlueprintAssignable)
 	FMagazineBecameEmptyDelegate MagazineBecameEmpty;
 
-	FCurrentAmmoUpdatedDelegate CurrentAmmoUpdated;
+	/** Returns the first person mesh */
+	UFUNCTION(BlueprintPure, Category = "Weapon")
+	USkeletalMeshComponent* GetFirstPersonMesh() const { return FirstPersonMesh; };
 
-	/*UPROPERTY(BlueprintCallable)
-	FReloadedDelegate MagazineReloaded; */
-	 
+	/** Returns the third person mesh */
+	UFUNCTION(BlueprintPure, Category = "Weapon")
+	USkeletalMeshComponent* GetThirdPersonMesh() const { return ThirdPersonMesh; };
+
 protected:
-
 	/** Simply to test the other direction, from BP to CPP */
 	UFUNCTION(BlueprintCallable)
 	void UpdateCurrentAmmo(int currentAmmo);
-	
+
+	/** Called to allow Blueprint code to react to this character's death */
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "On Shot"))
+	void BP_OnShot();
+
+public:	
+	/** Constructor */
+	AShooterWeapon();
+
+	FCurrentAmmoUpdatedDelegate CurrentAmmoUpdated;
+
+	/** Activates this weapon and gets it ready to fire */
+	void ActivateWeapon();
+
+	/** Deactivates this weapon */
+	void DeactivateWeapon();
+
+	/** Start firing this weapon */
+	void StartFireAction();
+
+	/** Stop firing this weapon */
+	void StopFireAction();
+
+	/** Returns the first person anim instance class */
+	const TSubclassOf<UAnimInstance>& GetFirstPersonAnimInstanceClass() const;
+
+	/** Returns the third person anim instance class */
+	const TSubclassOf<UAnimInstance>& GetThirdPersonAnimInstanceClass() const;
+
+	/** Returns the magazine size */
+	int32 GetMagazineSize() const { return MagazineSize; };
+
+	/** Returns the current bullet count */
+	int32 GetBulletCount() const { return CurrentBulletCount; }
+
+protected:
 	/** Gameplay initialization */
 	virtual void BeginPlay() override;
 
@@ -161,40 +195,4 @@ protected:
 	FTransform CalculateProjectileSpawnTransform(const FVector& TargetLocation) const;
 
 	bool CanShootBullet();
-
-	//void Reload();
-
-public:
-
-	/** Activates this weapon and gets it ready to fire */
-	void ActivateWeapon();
-
-	/** Deactivates this weapon */
-	void DeactivateWeapon();
-
-	/** Start firing this weapon */
-	void StartFireAction();
-
-	/** Stop firing this weapon */
-	void StopFireAction();
-
-	/** Returns the first person mesh */
-	UFUNCTION(BlueprintPure, Category="Weapon")
-	USkeletalMeshComponent* GetFirstPersonMesh() const { return FirstPersonMesh; };
-
-	/** Returns the third person mesh */
-	UFUNCTION(BlueprintPure, Category="Weapon")
-	USkeletalMeshComponent* GetThirdPersonMesh() const { return ThirdPersonMesh; };
-
-	/** Returns the first person anim instance class */
-	const TSubclassOf<UAnimInstance>& GetFirstPersonAnimInstanceClass() const;
-
-	/** Returns the third person anim instance class */
-	const TSubclassOf<UAnimInstance>& GetThirdPersonAnimInstanceClass() const;
-
-	/** Returns the magazine size */
-	int32 GetMagazineSize() const { return MagazineSize; };
-
-	/** Returns the current bullet count */
-	int32 GetBulletCount() const { return CurrentBulletCount; }
 };

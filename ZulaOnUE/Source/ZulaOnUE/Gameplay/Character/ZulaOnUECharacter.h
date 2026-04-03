@@ -128,7 +128,6 @@ public:
 	FBulletCountUpdatedDelegate BulletCountUpdated;
 	FDamagedDelegate OnDamaged;
 	FZulaCharacterDeathDelegate OnCharacterDied;
-	//FWeaponMagazineBecameEmpty WeaponMagazineBecameEmpty;
 
 	/** Returns the first person mesh **/
 	USkeletalMeshComponent* GetFirstPersonMesh() const { return FirstPersonMesh; }
@@ -153,12 +152,6 @@ public:
 	/** Applies weapon recoil to the owner */
 	virtual void AddWeaponRecoil(float Recoil) override;
 
-	/** Updates the weapon's HUD with the current ammo count */
-	//virtual void UpdateWeaponHUD(int32 CurrentAmmo, int32 MagazineSize) override;
-
-	//UFUNCTION(BlueprintImplementableEvent)
-	//int32 OnWeaponReloaded();
-
 	/** Calculates and returns the aim location for the weapon */
 	virtual FVector GetWeaponTargetLocation() override;
 
@@ -177,10 +170,6 @@ public:
 	//~End IShooterWeaponHolder interface
 
 protected:
-	///** Handles aim inputs from either controls or UI interfaces */
-	//UFUNCTION(BlueprintCallable, Category = "Input")
-	//virtual void DoAim(float Yaw, float Pitch);
-
 	/** Handles aim inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoAim(float Yaw, float Pitch);
@@ -210,11 +199,8 @@ protected:
 	void DoSwitchWeaponAction();
 
 	/** Called to allow Blueprint code to react to this character's death */
-	UFUNCTION(BlueprintImplementableEvent, Category = "Shooter", meta = (DisplayName = "On Death"))
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "On Death"))
 	void BP_OnDeath();
-
-	//UFUNCTION(BlueprintImplementableEvent)
-	//void BP_OnMagazineReloaded(int32 MagazineSize);
 
 	void OnWeaponMagazineReloaded(int32 magSize);
 

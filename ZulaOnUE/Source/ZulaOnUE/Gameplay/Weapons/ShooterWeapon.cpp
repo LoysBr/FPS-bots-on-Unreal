@@ -155,6 +155,11 @@ void AShooterWeapon::Fire()
 
 	CurrentAmmoUpdated.ExecuteIfBound(CurrentBulletCount);
 
+	// make noise so the AI perception system can hear us
+	MakeNoise(ShotLoudness, PawnOwner, PawnOwner->GetActorLocation(), ShotNoiseRange, ShotNoiseTag);
+
+	BP_OnShot();
+
 	if (CurrentBulletCount <= 0)
 	{
 		MagazineBecameEmpty.Broadcast();
@@ -162,9 +167,6 @@ void AShooterWeapon::Fire()
 
 	// update the time of our last shot
 	TimeOfLastShot = GetWorld()->GetTimeSeconds();
-
-	// make noise so the AI perception system can hear us
-	MakeNoise(ShotLoudness, PawnOwner, PawnOwner->GetActorLocation(), ShotNoiseRange, ShotNoiseTag);
 
 	// are we full auto?
 	if (IsAutomaticWeapon)

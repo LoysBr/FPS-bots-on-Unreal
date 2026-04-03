@@ -392,7 +392,7 @@ void AZulaOnUECharacter::Die()
 	BulletCountUpdated.Broadcast(0, 0);
 
 	// call the BP handler
-	BP_OnDeath();	
+	BP_OnDeath();
 
 	// schedule character respawn
 	GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &AZulaOnUECharacter::DeferredDestruction, RespawnTime, false);
