@@ -140,6 +140,12 @@ void AShooterWeapon::Fire()
 	{
 		return;
 	}
+
+	if (!CanShootBullet())
+	{
+		printScreen("Fire() but Cannot Shoot Bullet => returning");
+		return;
+	}
 	
 	// fire a projectile at the target
 	FireProjectile(WeaponOwner->GetWeaponTargetLocation());
